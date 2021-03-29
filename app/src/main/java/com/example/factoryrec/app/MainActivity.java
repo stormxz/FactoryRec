@@ -21,6 +21,7 @@ public class MainActivity extends FragmentActivity {
         Button page_home = (Button)findViewById(R.id.page_home);
         Button page_info = (Button)findViewById(R.id.page_om);
         Button page_zoning = (Button)findViewById(R.id.page_signal);
+        Button page_result = (Button)findViewById(R.id.page_result);
 
 
         page_dynamic.setOnClickListener(new View.OnClickListener() {
@@ -67,6 +68,16 @@ public class MainActivity extends FragmentActivity {
             }
         });
 
+        page_result.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager manager = getSupportFragmentManager();
+                FragmentTransaction transaction = manager.beginTransaction();
+                Fragment_Result Fragment_Result = new Fragment_Result();
+                transaction.add(R.id.fragment_container, Fragment_Result);
+                transaction.commit();
+            }
+        });
 
     }
 }
