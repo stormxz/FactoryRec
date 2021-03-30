@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import com.example.factoryrec.R;
 
 
-public class Fragment_OM extends Fragment {
+public class Fragment_OM extends MainFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
