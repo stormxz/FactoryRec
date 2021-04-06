@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="result_title_left">20dp</dimen>
+    <dimen name="result_title_top">20dp</dimen>
+
+</resources>

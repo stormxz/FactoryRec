@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">FactoryRec</string>
+
+    <string name="page_result">Result</string>
+
+    <string name="OM_confirm">OM Confirm</string>
+
+    <string name="Single_confirm">Single Confirm</string>
+
+    <string name="Display_confirm">Display Confirm</string>
 </resources>

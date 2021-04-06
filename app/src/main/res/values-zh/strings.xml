@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">FactoryRec</string>
+
+    <string name="page_result">结论</string>
+
+    <string name="OM_confirm">OM 确认</string>
+
+    <string name="Single_confirm">讯号量测确认</string>
+
+    <string name="Display_confirm">外观确认</string>
+</resources>
