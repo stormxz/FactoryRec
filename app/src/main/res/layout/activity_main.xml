@@ -57,7 +57,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@null"
-            android:text="结果" />
+            android:text="@string/page_result" />
 
 
     </LinearLayout>
