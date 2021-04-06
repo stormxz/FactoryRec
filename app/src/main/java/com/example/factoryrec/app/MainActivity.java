@@ -27,6 +27,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     public static final int PAGE_DISPLAY = 1;
     public static final int PAGE_OM = 2;
     public static final int PAGE_SIGNAL = 3;
+    public static final int PAGE_RESULT = 4;
     private int mCurrentPage = PAGE_HOME;
 
     private ArrayList<Fragment> mFragmentList;
@@ -37,6 +38,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private Button mDynamic_Button;
     private Button mOM_Button;
     private Button mSignal_Button;
+    private Button mResult_Button;
     private List<Button> mButtonList;
 
     protected ProductItem mItem;
@@ -60,22 +62,25 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         mDynamic_Button = (Button) findViewById(R.id.page_display);
         mOM_Button = (Button) findViewById(R.id.page_om);
         mSignal_Button = (Button) findViewById(R.id.page_signal);
+        mResult_Button = (Button) findViewById(R.id.page_result);
         mHome_Button.setOnClickListener(this);
         mDynamic_Button.setOnClickListener(this);
         mOM_Button.setOnClickListener(this);
         mSignal_Button.setOnClickListener(this);
+        mResult_Button.setOnClickListener(this);
 
         mButtonList = new ArrayList<Button>();
         mButtonList.add(mHome_Button);
         mButtonList.add(mDynamic_Button);
         mButtonList.add(mOM_Button);
         mButtonList.add(mSignal_Button);
+        mButtonList.add(mResult_Button);
     }
 
     private void initViewPage() {
         mViewPager = findViewById(R.id.pager);
         mFragmentList = new ArrayList<Fragment>();
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 5; i++) {
             initPages(i);
         }
         mAdapter = new ViewPageAdapter(getSupportFragmentManager(), mFragmentList);
@@ -104,6 +109,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 fragment = new Fragment_Signal();
                 mFragmentList.add(PAGE_SIGNAL, fragment);
                 break;
+            case PAGE_RESULT:
+                fragment = new Fragment_Result();
+                mFragmentList.add(PAGE_RESULT,fragment);
         }
     }
 
@@ -165,7 +173,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         public void onPageSelected(int index) {
             Log.i(TAG, "onPageSelected : index = " + index);
             mCurrentPage = index;
-            for (int i = 0; i < 4; i++) {
+            for (int i = 0; i < 5; i++) {
                 if (index == i) {
                     mButtonList.get(i).setBackgroundColor(getResources().getColor(R.color.button_color_selected, null));
                 } else {
@@ -196,6 +204,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 break;
             case R.id.page_signal:
                 mViewPager.setCurrentItem(PAGE_SIGNAL, true);
+                break;
+            case R.id.page_result:
+                mViewPager.setCurrentItem(PAGE_RESULT, true);
                 break;
         }
     }
