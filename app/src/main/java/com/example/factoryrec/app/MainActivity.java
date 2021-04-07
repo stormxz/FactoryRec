@@ -1,12 +1,16 @@
 package com.example.factoryrec.app;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
@@ -14,9 +18,12 @@ import android.widget.Button;
 
 import com.example.factoryrec.R;
 import com.example.factoryrec.util.ProductItem;
+import com.example.factoryrec.util.VocConstant;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.factoryrec.app.Fragment_Display.PHOTOS;
 
 
 public class MainActivity extends FragmentActivity implements View.OnClickListener {
@@ -46,11 +53,37 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //请求权限
+        requestPremission();
         setContentView(R.layout.activity_main);
 
         mItem = ProductItem.getInstance();
         initButton();
         initViewPage();
+
+    }
+
+    /**
+     * 请求手机权限
+     */
+    private void requestPremission() {
+        if (Build.VERSION.SDK_INT < 23) {
+            return;
+        }
+
+        List<String> permissions = new ArrayList<String>();
+        for (String string : VocConstant.PERMISSIONS) {
+            if (ContextCompat.checkSelfPermission(this, string) != PackageManager.PERMISSION_GRANTED) {
+                permissions.add(string);
+            }
+        }
+        Log.e("stormxz", "------当前要申请的权限个数---" + permissions.size());
+        if (permissions.size() <= 0) {
+            return;
+        }
+        String[] array = new String[permissions.size()];
+        permissions.toArray(array);
+        requestPermissions(array, 100001);
     }
 
     public ProductItem getItem() {
@@ -88,6 +121,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         mViewPager.addOnPageChangeListener((ViewPager.OnPageChangeListener) mAdapter);
         mViewPager.setCurrentItem(0);
         mViewPager.setPageTransformer(true, new ViewPageTransformer());
+        mViewPager.setOffscreenPageLimit(5);
     }
 
     private void initPages(int index) {
@@ -214,8 +248,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.i(TAG, "onActivityResult");
-        mFragmentList.get(0).onActivityResult(requestCode, resultCode, data);
+        mFragmentList.get(mViewPager.getCurrentItem()).onActivityResult(requestCode, resultCode, data);
 
     }
 }

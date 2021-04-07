@@ -30,4 +30,52 @@
         android:layout_height="300dp"
         android:hint="请讯号量测确认..."/>
 
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/line_light"
+        android:layout_marginLeft="@dimen/distance_to_screen"
+        android:layout_marginRight="@dimen/distance_to_screen" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="@dimen/distance_to_screen"
+        android:layout_marginRight="@dimen/distance_to_screen">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/feedback_add_image"
+                    android:textColor="@color/content_text"
+                    android:textSize="16sp" />
+
+                <com.example.factoryrec.ui.ScrollGridView
+                    android:id="@+id/gViewPostPicture_single"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:listSelector="@android:color/transparent"
+                    android:numColumns="4"
+                    android:scrollbars="none" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
 </LinearLayout>

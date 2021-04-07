@@ -6,4 +6,163 @@
 
     <color name="button_color_selected">#FFCC33</color>
     <color name="button_color_unselected">#FFFFFF</color>
+
+    <color name="line_light">#1A000000</color>
+
+    <color name="content_text">#99000000</color>
+
+    <color name="checkbox_on">#80FFFFFF</color>
+    <color name="checkbox_off">#ffb8babb</color>
+
+    <color name="color_8A000000">#8A000000</color>
+    <color name="color_CCEA2E2E">#CCEA2E2E</color>
+    <color name="color_0D000000">#0D000000</color>
+    <color name="color_80FFFFFF">#80FFFFFF</color>
+    <color name="color_66FFFFFF">#66FFFFFF</color>
+    <color name="color_1AFFFFFF">#1AFFFFFF</color>
+    <color name="color_FF505FEB">#FF505FEB</color>
+    <color name="color_FFF2F4F4">#FFF2F4F4</color>
+    <color name="color_DE000000">#DE000000</color>
+    <color name="color_1F000000">#1F000000</color>
+    <color name="color_FFFFAB10">#FFFFAB10</color>
+    <color name="color_72000000">#72000000</color>
+    <color name="color_FFF19C3F">#FFF19C3F</color>
+
+
+    <!-- 普通背景 -->
+    <color name="transparent">#00000000</color>
+    <color name="common_bg">#F2F4F4</color>
+    <color name="title_text">#99000000</color>
+    <color name="title_bg">#505FEB</color>
+    <color name="common_blue">#3B3FB6</color>
+
+    <!-- 通用按钮背景 -->
+    <color name="common_btn_bg">#303030</color>
+    <color name="common_btn_bg_on">#1e1c1d</color>
+
+    <!-- 半透明 -->
+    <color name="b_transparent">#70000000</color>
+    <color name="b_city_transparent">#FF0B1B2E</color>
+    <color name="bg_transparent">#90000000</color>
+
+    <!-- 红色 -->
+    <color name="red_normal">#ffff4444</color>
+    <color name="red_press">#ffcc0000</color>
+
+    <!-- 蓝色 -->
+    <color name="blue_normal">#1BC1FF</color>
+    <color name="blue_press">#1BB5FF</color>
+
+    <!-- 灰色 -->
+    <color name="gray_normal">#66666666</color>
+    <color name="gray_press">#99999999</color>
+
+    <!-- 黄色 -->
+    <color name="voc_normal">#0088a4</color>
+    <color name="voc_press">#118fab</color>
+
+    <!-- 黑色 -->
+    <color name="ivvi_black_normal">#483e3d</color>
+    <color name="ivvi_black_press">#483a3d</color>
+
+    <!-- 绿色 -->
+    <color name="green_normal">#ff669900</color>
+    <color name="green_press">#ff668800</color>
+
+    <!-- 橙色 -->
+    <color name="orange_normal">#ffffaf00</color>
+    <color name="orange_press">#ffff8800</color>
+
+
+    <!-- 表格 -->
+    <color name="table_row_bg">#10000000</color>
+    <color name="table_tilte_bg">#15000000</color>
+
+    <!-- 列表项按下背景 -->
+    <color name="listview_item_press">#11000000</color>
+
+    <!-- 列表分割线 -->
+    <color name="listview_divider">#22000000</color>
+
+    <!-- 菜单字体颜色 -->
+    <color name="menu_tab_text_normal">#666666</color>
+
+    <!-- 时间轴 -->
+    <color name="timeline_on">#3B3FB6</color>
+    <color name="timeline_off">#40000000</color>
+
+    <!-- Media -->
+    <color name="camera_bg">#2c2c2c</color>
+    <color name="camera_progress">#2980B9</color>
+    <color name="camera_progress_split">#005084</color>
+    <color name="camera_progress_three">#24ff00</color>
+    <color name="camera_progress_overflow">#1b5d89</color>
+    <color name="camera_theme_selected_bgcolor">#2980B9</color>
+    <color name="camera_bottom_press_bg">#1b1c1f</color>
+    <color name="camera_progress_delete">#f68b2b</color>
+    <color name="transparent2">#50000000</color>
+    <color name="title_background_color">#fcb840</color>
+    <color name="text_gray2">#ffC3C3C3</color>
+    <color name="translucent_background_80">#CC000000</color>
+    <color name="translucent_background_50">#7f000000</color>
+    <color name="transparent_black_40">#66000000</color>
+    <color name="transparent_black_85">#DA000000</color>
+    <color name="transparent_black_30">#4D000000</color>
+
+    <!-- 白色 -->
+    <color name="white">#ffffff</color>
+    <color name="process_description_num_bg_color">#3B3FB6</color>
+
+    <!-- 黑色 -->
+    <color name="black">#000000</color>
+
+    <!-- 紫色 -->
+    <color name="violet">#3B3FB6</color>
+
+    <!--导航栏状态-->
+    <color name="navigation_bar_click">#ff505FEB</color>
+    <color name="navigation_bar">#8A000000</color>
+
+    <!--菜单背景颜色-->
+    <color name="menu_start_bg">#00C0CED8</color>
+    <color name="menu_end_bg">#1098B0C1</color>
+
+    <!--手机日志-->
+    <color name="common_window_bg_color">#FFF5F7F9</color>
+    <color name="color_FF1BC1FF">#FF1BC1FF</color>
+    <color name="color_E11BC1FF">#E11BC1FF</color>
+    <color name="color_14000000">#14000000</color>
+    <color name="color_E1FFFFFF">#E1FFFFFF</color>
+    <color name="color_1E000000">#1E000000</color>
+    <color name="line_item_color_normal">@android:color/white</color>
+    <color name="color_FFD9D9D9">#FFD9D9D9</color>
+    <color name="dialog_panel_bg_color">#FFF9F9F9</color>
+    <color name="color_8C000000">#8C000000</color>
+    <color name="color_FF69C7F9">#FF69C7F9</color>
+    <color name="color_FF3BB3F5">#FF3BB3F5</color>
+    <color name="color_FF2E9BE5">#FF2E9BE5</color>
+    <color name="color_FF147DCD">#FF147DCD</color>
+    <color name="color_FF0065B3">#FF0065B3</color>
+    <color name="color_FF005799">#FF005799</color>
+    <color name="color_1bc1ff">#1bc1ff</color>
+
+    <color name="common_accent">#FF1BC1FF</color>
+    <color name="common_mask">#800B1B2E</color>
+    <color name="common_error">#FFEA2E2E</color>
+    <color name="primary_light">#DE000000</color>
+    <color name="secondary_light">#B8000000</color>
+    <color name="third_light">#8A000000</color>
+    <color name="disable_light">#42000000</color>
+    <color name="ixd_acbg1">#FF505FEB</color>
+    <color name="ixd_bg1">#FFF2F4F4</color>
+    <color name="ixd_bg2">#FFFFFFFF</color>
+    <color name="ff_000000">#FF000000</color>
+
+
+    <color name="colorControlActivated">#FF03A9F4</color>
+    <color name="colorControlNormal">#FF78909C</color>
+    <!--home six btn bg-->
+    <color name="menu_bg_start">#00C0CED8</color>
+    <color name="menu_bg_end">#1098B0C1</color>
+    <color name="color_61000000">#61000000</color>
 </resources>

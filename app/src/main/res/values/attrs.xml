@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 字体大小 -->
+    <attr name="size_title_text_size" format="dimension" />
+    <attr name="size_content_text_size" format="dimension" />
+    <attr name="size_content_text_size_small" format="dimension" />
+    <attr name="size_content_text_size_large" format="dimension" />
+    <attr name="size_common_btn_text_size" format="dimension" />
+
+    <!-- RoundImageView -->
+    <attr name="borderRadius" format="dimension" />
+    <attr name="type">
+        <enum name="circle" value="0" />
+        <enum name="round" value="1" />
+    </attr>
+
+    <!-- RoundImageView -->
+    <declare-styleable name="RoundImageView">
+        <attr name="borderRadius" />
+        <attr name="type" />
+    </declare-styleable>
+
+    <!-- LineView -->
+    <declare-styleable name="LineView">
+        <attr name="circle_color" format="color|reference" />
+        <attr name="line_color" format="color|reference" />
+        <attr name="number_color" format="color|reference" />
+        <attr name="text_color" format="color|reference" />
+        <attr name="circle_stroke" format="dimension|reference" />
+        <attr name="line_stroke" format="dimension|reference" />
+        <attr name="number_textSize" format="dimension|reference" />
+        <attr name="text_textSize" format="dimension|reference" />
+        <attr name="text_space" format="dimension|reference" />
+        <attr name="text_marginTop" format="dimension|reference" />
+        <attr name="number_marginTop" format="dimension|reference" />
+        <attr name="circle_marginTop" format="dimension|reference" />
+        <attr name="circle_radius" format="dimension|reference" />
+        <attr name="line_length" format="dimension|reference" />
+        <attr name="circle_select_color" format="color|reference" />
+        <attr name="number_select_color" format="color|reference" />
+        <attr name="text_select_color" format="color|reference" />
+    </declare-styleable>
+
+    <!-- ScaleImageView -->
+    <declare-styleable name="ScaleImageView">
+        <attr name="src" format="reference" />
+        <attr name="assetName" format="string" />
+        <attr name="panEnabled" format="boolean" />
+        <attr name="zoomEnabled" format="boolean" />
+        <attr name="quickScaleEnabled" format="boolean" />
+        <attr name="tileBackgroundColor" format="color" />
+    </declare-styleable>
+
+    <!--手机日志-->
+    <declare-styleable name="RotateInButton">
+        <attr name="text"  format="reference"/>
+        <attr name="enabled" format="boolean"/>
+        <attr name="textStyle" format="reference"/>
+    </declare-styleable>
+
+    <!-- PagerSlidingTabStrip -->
+    <declare-styleable name="PagerSlidingTabStrip">
+        <attr name="indicatorColor" format="color" />
+        <attr name="underlineColor" format="color" />
+        <attr name="dividerColor" format="color" />
+        <attr name="indicatorHeight" format="dimension" />
+        <attr name="underlineHeight" format="dimension" />
+        <attr name="dividerPadding" format="dimension" />
+        <attr name="tabPaddingLeftRight" format="dimension" />
+        <attr name="scrollOffset" format="dimension" />
+        <attr name="tabBackground" format="reference" />
+        <attr name="shouldExpand" format="boolean" />
+        <attr name="textAllCaps1" format="boolean" />
+    </declare-styleable>
+
+</resources>

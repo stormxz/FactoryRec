@@ -8,4 +8,22 @@
     <string name="Single_confirm">Single Confirm</string>
 
     <string name="Display_confirm">Display Confirm</string>
+
+    <string name="feedback_add_image">Add images</string>
+
+    <string name="image_description">Image source</string>
+
+    <!-- 图片选择 -->
+    <string name="folder_all">All photos</string>
+    <string name="preview">Preview</string>
+    <string name="msg_no_camera">There is no system camera</string>
+    <string name="msg_amount_limit">The highest selection number is met</string>
+    <string name="action_done">Complete</string>
+    <string name="photo_unit">piece(s)</string>
+    <string name="tip_take_photo">Take pictures</string>
+    <string name="picture">Pictures</string>
+    <string name="finsih">Complete</string>
+
+    <string name="all_pictures">All pictures</string>
+
 </resources>

@@ -8,4 +8,21 @@
     <string name="Single_confirm">讯号量测确认</string>
 
     <string name="Display_confirm">外观确认</string>
+
+    <string name="feedback_add_image">添加图片</string>
+
+    <string name="image_description">图片资源</string>
+
+    <!-- 图片选择 -->
+    <string name="folder_all">所有照片</string>
+    <string name="preview">预览</string>
+    <string name="msg_no_camera">没有系统相机</string>
+    <string name="msg_amount_limit">已经达到最高选择数量</string>
+    <string name="action_done">完成</string>
+    <string name="photo_unit">张</string>
+    <string name="tip_take_photo">拍摄照片</string>
+    <string name="picture">图片</string>
+    <string name="finsih">完成</string>
+
+    <string name="all_pictures">所有图片</string>
 </resources>
