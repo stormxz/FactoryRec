@@ -6,10 +6,13 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.example.factoryrec.R;
 import com.example.factoryrec.selector.MultiImageSelectorActivity;
@@ -25,12 +28,32 @@ public class Fragment_Display extends MainFragment {
     // 图片附件数据
     private List<Bitmap> postPictureData;
 
+    private EditText mDisplayEditText = null;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_menu_display, container, false);
         gViewPostPicture = view.findViewById(R.id.gViewPostPicture_display);
+
+        mDisplayEditText = view.findViewById(R.id.display_et);
+                        // 添加显示文本编辑监听
+        mDisplayEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+                    @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                mItem.setDisplayText(s + "");
+            }
+
+                    @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
         super.onCreateView(inflater, container, savedInstanceState);
         return view;
     }

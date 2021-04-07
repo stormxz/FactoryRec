@@ -10,13 +10,13 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/result_title_left"
         android:layout_marginTop="@dimen/result_title_top"
-        android:text="@string/Single_confirm"
+        android:text="@string/Signal_confirm"
         android:textColor="@android:color/black"
         android:textStyle="bold"
         android:textSize="25sp"/>
 
     <EditText
-        android:id="@+id/singel_et"
+        android:id="@+id/signal_et"
         android:background="@drawable/bg_edittext"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
@@ -66,7 +66,7 @@
                     android:textSize="16sp" />
 
                 <com.example.factoryrec.ui.ScrollGridView
-                    android:id="@+id/gViewPostPicture_single"
+                    android:id="@+id/gViewPostPicture_signal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"

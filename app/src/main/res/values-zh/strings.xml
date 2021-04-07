@@ -5,7 +5,7 @@
 
     <string name="OM_confirm">OM 确认</string>
 
-    <string name="Single_confirm">讯号量测确认</string>
+    <string name="Signal_confirm">讯号量测确认</string>
 
     <string name="Display_confirm">外观确认</string>
 
@@ -25,4 +25,6 @@
     <string name="finsih">完成</string>
 
     <string name="all_pictures">所有图片</string>
+
+    <string name="send_submit">提交</string>
 </resources>
