@@ -121,6 +121,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         mViewPager.addOnPageChangeListener((ViewPager.OnPageChangeListener) mAdapter);
         mViewPager.setCurrentItem(0);
         mViewPager.setPageTransformer(true, new ViewPageTransformer());
+        mViewPager.setOffscreenPageLimit(5);
     }
 
     private void initPages(int index) {
