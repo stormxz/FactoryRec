@@ -31,6 +31,8 @@
     <!--左右距离屏幕距离-->
     <dimen name="distance_to_screen">20dp</dimen>
 
+    <dimen name="distance_to_screen_logo">40dp</dimen>
+
     <!--行高-->
     <dimen name="list_height">56dp</dimen>
 
