@@ -3,4 +3,70 @@
     <dimen name="result_title_left">20dp</dimen>
     <dimen name="result_title_top">20dp</dimen>
 
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="indicator_right_padding">10dp</dimen>
+    <dimen name="indicator_corner_radius">12dp</dimen>
+    <dimen name="indicator_internal_padding">4dp</dimen>
+    <dimen name="header_footer_left_right_padding">12dp</dimen>
+    <dimen name="header_footer_top_bottom_padding">10dp</dimen>
+    <dimen name="image_size">120dp</dimen>
+    <dimen name="space_size">2dp</dimen>
+    <dimen name="folder_cover_size">72dp</dimen>
+    <dimen name="common_btn_padding">20dp</dimen>
+    <!-- listview_divider_height -->
+    <dimen name="listview_divider_height">0.5dp</dimen>
+
+    <dimen name="order_select_img_padding">15dp</dimen>
+
+    <dimen name="one_dp">1dp</dimen>
+    <dimen name="ten_dp">10dp</dimen>
+
+    <dimen name="red_star_padding_right">10dp</dimen>
+    <dimen name="red_star_padding_left">15dp</dimen>
+    <dimen name="feed_back_margin">15dp</dimen>
+
+    <!--左右距离屏幕距离-->
+    <dimen name="distance_to_screen">20dp</dimen>
+
+    <!--行高-->
+    <dimen name="list_height">56dp</dimen>
+
+
+    <!--手机日志-->
+    <dimen name="activity_padding">20dp</dimen>
+    <dimen name="button_progress_size">24dp</dimen>
+
+    <!--分割线高度-->
+    <dimen name="split_line_height">0.5dp</dimen>
+    <!--checkBox 与字体的距离-->
+    <dimen name="check_box_text_spil">5dp</dimen>
+
+    <dimen name="spinner_itme_width">120dp</dimen>
+    <dimen name="size_1dp">1dp</dimen>
+    <dimen name="size_4dp">4dp</dimen>
+    <dimen name="size_6dp">6dp</dimen>
+    <dimen name="size_8dp">8dp</dimen>
+    <dimen name="size_9dp">9dp</dimen>
+    <dimen name="size_10dp">10dp</dimen>
+    <dimen name="size_12dp">12dp</dimen>
+    <dimen name="size_13dp">13dp</dimen>
+    <dimen name="size_14dp">14dp</dimen>
+    <dimen name="size_15dp">15dp</dimen>
+    <dimen name="size_16dp">16dp</dimen>
+    <dimen name="size_16sp">16sp</dimen>
+    <dimen name="size_17dp">17dp</dimen>
+    <dimen name="size_18dp">18dp</dimen>
+    <dimen name="size_20dp">20dp</dimen>
+    <dimen name="size_22dp">22dp</dimen>
+    <dimen name="size_24dp">24dp</dimen>
+    <dimen name="size_28dp">28dp</dimen>
+    <dimen name="size_30dp">30dp</dimen>
+    <dimen name="size_35dp">35dp</dimen>
+    <dimen name="size_40dp">40dp</dimen>
+    <dimen name="size_107dp">107dp</dimen>
+
+    <dimen name="size_11dp">11dp</dimen>
 </resources>
