@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="bad_phenomenon" translatable="false">
+        <item>CP00偏光版类不良</item>
+        <item>CM00品味性不良</item>
+        <item>CF00功能性不良</item>
+        <item>CD00Dot类不良</item>
+        <item>CA00外观类不良</item>
+        <item>CN00Other</item>
+    </string-array>
+
+    <string-array name="CP00偏光版类不良" translatable="false">
+        <item>CP01 偏光板凹点</item>
+        <item>CP02 偏光板凸点</item>
+        <item>CP03 偏光板来料不良</item>
+        <item>CP04 偏光板色差</item>
+        <item>CP05 偏光板水痕</item>
+        <item>CP06 偏光板压痕</item>
+        <item>CP07 上偏光板脱胶</item>
+        <item>CP08 下偏光板脱胶</item>
+        <item>CP09 上偏光板斜纹</item>
+        <item>CP10 下偏光板斜纹</item>
+        <item>CP11 上偏光板玻璃屑</item>
+        <item>CP12 下偏光板玻璃屑</item>
+        <item>CP13 上偏光板剥离</item>
+        <item>CP14 下偏光板剥离</item>
+        <item>CP15 上偏光板刺伤</item>
+        <item>CP16 下偏光板刺伤</item>
+        <item>CP17 上偏光板刮伤</item>
+        <item>CP18 下偏光板刮伤</item>
+        <item>CP19 上偏光板残胶</item>
+        <item>CP20 下偏光板残胶</item>
+        <item>CP21 上偏光板偏移</item>
+        <item>CP22 下偏光板偏移</item>
+        <item>CP23 上偏光板气泡</item>
+        <item>CP24 下偏光板气泡</item>
+        <item>CP25 上偏光板贴错</item>
+        <item>CP26 下偏光板贴错</item>
+        <item>CP27 上偏光板贴反</item>
+        <item>CP28 下偏光板贴反</item>
+        <item>CP29 上偏光板未贴</item>
+        <item>CP30 下偏光板未贴</item>
+        <item>CP31 上偏光板异物</item>
+        <item>CP32 下偏光板异物</item>
+        <item>CP33 上偏光板纤维异物</item>
+        <item>CP34 下偏光板纤维异物</item>
+        <item>CP35 上偏光板皱折</item>
+        <item>CP36 下偏光板皱折</item>
+        <item>CP37 上偏光板烫伤</item>
+        <item>CP38 下偏光板烫伤</item>
+        <item>other</item>
+    </string-array>
+
+    <string-array name="CM00品味性不良" translatable="false">
+        <item>CM01 B Spot</item>
+        <item>CM02 BM不良</item>
+        <item>CM03 BM破洞</item>
+        <item>CM04 Cell面内刮伤</item>
+        <item>CM05 Cell内异物(点状)</item>
+        <item>CM06 Cell其他不良</item>
+        <item>CM07 Cell组反</item>
+        <item>CM08 CF Shot Mura</item>
+        <item>CM09 CF色剥落</item>
+        <item>CM10 CF色不均</item>
+        <item>CM11 G Spot</item>
+        <item>CM12 Gap严重不均</item>
+        <item>CM13 Panel周围漏光</item>
+        <item>CM14 Push Mura</item>
+        <item>CM15 R Spot</item>
+        <item>CM16 Row Mura</item>
+        <item>CM17 Shot Mura</item>
+        <item>CM18 TFT不良</item>
+        <item>CM19 Wipe Mura</item>
+        <item>CM20 凹陷Mura</item>
+        <item>CM21 白点</item>
+        <item>CM22 白色丸状mura</item>
+        <item>CM23 边框不均</item>
+        <item>CM24 波浪不均</item>
+        <item>CM25 残影</item>
+        <item>CM26 潮汐</item>
+        <item>CM27 垂直串扰</item>
+        <item>CM28 垂直带状Mura</item>
+        <item>CM29 垂直区块缺陷</item>
+        <item>CM30 耳朵漏光</item>
+        <item>CM31 黑点</item>
+        <item>CM32 黑雾</item>
+        <item>CM33 弧形Mura</item>
+        <item>CM34 圆圈mura</item>
+        <item>CM35 角落Mura</item>
+        <item>CM36 配向不良</item>
+        <item>CM37 其他CELL不良</item>
+        <item>CM38 其他不均-1</item>
+        <item>CM39 其他不均-2</item>
+        <item>CM40 其他不均-3</item>
+        <item>CM41 其他不均-4</item>
+        <item>CM42 其他不均-5</item>
+        <item>CM43 其他不均-6</item>
+        <item>CM44 其他不均-7</item>
+        <item>CM45 其他不均-8</item>
+        <item>CM46 其他不均-9</item>
+        <item>CM47 其他不均-10</item>
+        <item>CM48 其它Mura</item>
+        <item>CM49 棋盘状Mura</item>
+        <item>CM50 区块Mura</item>
+        <item>CM51 圈状Mura</item>
+        <item>CM52 全黑画素漏光</item>
+        <item>CM53 妊娠纹Mura</item>
+        <item>CM54 沙沙Mura</item>
+        <item>CM55 山水mura</item>
+        <item>CM56 水波纹Mura</item>
+        <item>CM57 水平串扰</item>
+        <item>CM58 水平带状Mura</item>
+        <item>CM59 水平区块缺陷</item>
+        <item>CM60 吸著Mura</item>
+        <item>CM61 线状Mura</item>
+        <item>CM62 斜纹Mura</item>
+        <item>CM63 斜雨mura</item>
+        <item>CM64 异物GAP</item>
+        <item>CM65 云状Mura</item>
+        <item>CM66 重力Mura</item>
+        <item>CM67 週边Gap mura</item>
+        <item>CM68 週边条状mura</item>
+        <item>CM69 Coin Mura</item>
+        <item>CM71 Cell内异物(线状)</item>
+        <item>other</item>
+    </string-array>
+
+    <string-array name="CF00功能性不良" translatable="false">
+        <item>CF01 S亮线</item>
+        <item>CF02 G亮线</item>
+        <item>CF03 S 亮点带线</item>
+        <item>CF04 G亮点带线</item>
+        <item>CF05 S暗点带线</item>
+        <item>CF06 G暗点带线</item>
+        <item>CF07 G断线</item>
+        <item>CF08 S断线</item>
+        <item>CF09 十字线</item>
+        <item>CF10 S-short</item>
+        <item>CF11 G-short</item>
+        <item>CF12 S渐层线</item>
+        <item>CF13 G渐层线</item>
+        <item>CF25 S弱线</item>
+        <item>CF26 G弱线</item>
+        <item>CF14 G压力线</item>
+        <item>CF15 S压力线</item>
+        <item>CF16 S暗线</item>
+        <item>CF17 G暗线</item>
+        <item>CF18 静电气</item>
+        <item>CF19 半屏画异</item>
+        <item>CF20 低频画面泛白</item>
+        <item>CF21 画面异常</item>
+        <item>CF22 阶调色偏</item>
+        <item>CF23 其他电气不良</item>
+        <item>CF24 无画面</item>
+        <item>other</item>
+    </string-array>
+
+    <string-array name="CD00Dot类不良" translatable="false">
+        <item>CD01 Leak辉点</item>
+        <item>CD02 暗点</item>
+        <item>CD03 暗点点距</item>
+        <item>CD04 暗点总数</item>
+        <item>CD05 二连暗点</item>
+        <item>CD06 二连亮点</item>
+        <item>CD07 聚集暗点</item>
+        <item>CD08 聚集亮点</item>
+        <item>CD09 亮暗点点距</item>
+        <item>CD10 亮暗点总数</item>
+        <item>CD11 亮点</item>
+        <item>CD12 亮点点距</item>
+        <item>CD13 亮点总数过多</item>
+        <item>CD14 三连暗点</item>
+        <item>CD15 三连亮点</item>
+        <item>CD16 闪烁辉点</item>
+        <item>CD17 碎亮点</item>
+        <item>CD18 压力点</item>
+        <item>CD19 灰阶亮点</item>
+        <item>other</item>
+    </string-array>
+
+    <string-array name="CA00外观类不良" translatable="false">
+        <item>CA01 Array玻璃表面刮伤</item>
+        <item>CA02 Array端子部破损</item>
+        <item>CA03 Array反端子部破损</item>
+        <item>CA04 Array切裂不良</item>
+        <item>CA05 Array缺角</item>
+        <item>CA06 Array凸缘</item>
+        <item>CA07 Cell崩边</item>
+        <item>CA08 Cell刺伤</item>
+        <item>CA09 Cell破片</item>
+        <item>CA10 CF玻璃表面刮伤</item>
+        <item>CA11 CF端子部破损</item>
+        <item>CA12 CF反端子部破损</item>
+        <item>CA13 CF切裂不良</item>
+        <item>CA14 CF缺角</item>
+        <item>CA15 CF凸缘</item>
+        <item>CA16 WOA走线刮伤</item>
+        <item>CA17 磨边不良</item>
+        <item>CA18 切割不良</item>
+        <item>CA19 延伸性裂痕</item>
+        <item>CA20 液晶气泡</item>
+        <item>CA21 COF折痕</item>
+        <item>CA22 IC脱落</item>
+        <item>CA23 PCB外观不良</item>
+        <item>CA24 钢琴盖不良</item>
+        <item>CA25 标签不良</item>
+        <item>CA26 无COF</item>
+        <item>CA27 涂胶不良</item>
+        <item>CA28 COF外观不良</item>
+        <item>CA29 COF Boding不良</item>
+        <item>CA30 ACF贴附不良</item>
+        <item>CA31 上偏保护膜撕除不良</item>
+        <item>CA32 下偏保护膜撕除不良</item>
+        <item>CA33 Cell外观不良</item>
+        <item>other</item>
+    </string-array>
+
+    <string-array name="CN00Other" translatable="false">
+        <item>CN01 无不良</item>
+        <item>CN02 API无法判定</item>
+        <item>CN03 Array X品</item>
+        <item>CN04 Flicker无法调至最佳</item>
+    </string-array>
+</resources>
