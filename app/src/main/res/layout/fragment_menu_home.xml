@@ -26,15 +26,19 @@
             android:layout_marginTop="23dp"
             android:src="@mipmap/ic_edit" />
 
-        <Spinner
+        <TextView
             android:id="@+id/custom_spinner"
-            android:layout_width="255dp"
-            android:layout_height="wrap_content"
+            android:layout_width="238dp"
+            android:layout_height="35dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="75dp"
+            android:layout_marginStart="96dp"
             android:layout_marginTop="15dp"
-            android:background="@android:drawable/btn_dropdown" />
+            android:background="@drawable/edit_state"
+            android:drawableRight="@mipmap/spinner_down_arrow"
+            android:gravity="center_vertical"
+            android:textColor="@color/disable_light"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/custom_text"
@@ -122,15 +126,33 @@
             android:layout_marginEnd="7dp"
             android:background="@color/line_light" />
 
-        <Spinner
-            android:id="@+id/position_spinner2"
-            android:layout_width="237dp"
-            android:layout_height="wrap_content"
+        <TextView
+            android:id="@+id/phenom_spinner"
+            android:layout_width="238dp"
+            android:layout_height="35dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="91dp"
-            android:layout_marginTop="246dp"
-            android:background="@android:drawable/btn_dropdown" />
+            android:layout_marginStart="96dp"
+            android:layout_marginTop="197dp"
+            android:background="@drawable/edit_state"
+            android:drawableRight="@mipmap/spinner_down_arrow"
+            android:gravity="center_vertical"
+            android:textColor="@color/disable_light"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/phenom_spinner2"
+            android:layout_width="238dp"
+            android:layout_height="35dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="96dp"
+            android:layout_marginTop="251dp"
+            android:background="@drawable/edit_state"
+            android:drawableRight="@mipmap/spinner_down_arrow"
+            android:gravity="center_vertical"
+            android:textColor="@color/disable_light"
+            android:textSize="16sp" />
 
         <ImageView
             android:id="@+id/edit_image_phenom_2"
@@ -138,19 +160,19 @@
             android:layout_height="20dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="359dp"
-            android:layout_marginTop="244dp"
+            android:layout_marginStart="358dp"
+            android:layout_marginTop="260dp"
             android:src="@mipmap/ic_edit" />
 
-        <Spinner
-            android:id="@+id/position_spinner"
-            android:layout_width="237dp"
-            android:layout_height="wrap_content"
+        <ImageView
+            android:id="@+id/edit_image_phenom"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="92dp"
-            android:layout_marginTop="189dp"
-            android:background="@android:drawable/btn_dropdown" />
+            android:layout_marginStart="358dp"
+            android:layout_marginTop="205dp"
+            android:src="@mipmap/ic_edit" />
 
         <TextView
             android:id="@+id/phenom_text"
@@ -162,24 +184,19 @@
             android:layout_marginTop="204dp"
             android:text="不良现象" />
 
-        <ImageView
-            android:id="@+id/edit_image_phenom_"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+        <TextView
+            android:id="@+id/machine_spinner"
+            android:layout_width="238dp"
+            android:layout_height="35dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="359dp"
-            android:layout_marginTop="200dp"
-            android:src="@mipmap/ic_edit" />
-
-        <Spinner
-            android:id="@+id/machine_spinner"
-            android:layout_width="256dp"
-            android:layout_height="35dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
+            android:layout_marginStart="96dp"
             android:layout_marginTop="74dp"
-            android:layout_marginEnd="81dp"
+            android:background="@drawable/edit_state"
+            android:drawableRight="@mipmap/spinner_down_arrow"
+            android:gravity="center_vertical"
+            android:textColor="@color/disable_light"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -205,7 +222,7 @@
 
         <EditText
             android:id="@+id/time_edittext"
-            android:layout_width="280dp"
+            android:layout_width="275dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
@@ -230,11 +247,11 @@
 
         <EditText
             android:id="@+id/sn_editText"
-            android:layout_width="259dp"
+            android:layout_width="239dp"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="76dp"
+            android:layout_marginStart="96dp"
             android:layout_marginTop="126dp"
             android:ems="10"
             android:gravity="center"
@@ -262,14 +279,19 @@
             android:layout_marginTop="142dp"
             android:text="SN" />
 
-        <Spinner
-            android:id="@+id/spinner3"
-            android:layout_width="258dp"
-            android:layout_height="wrap_content"
+        <TextView
+            android:id="@+id/site_spinner"
+            android:layout_width="256dp"
+            android:layout_height="35dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginEnd="58dp"
-            android:layout_marginBottom="330dp"
+            android:layout_marginEnd="57dp"
+            android:layout_marginBottom="324dp"
+            android:background="@drawable/edit_state"
+            android:drawableRight="@mipmap/spinner_down_arrow"
+            android:gravity="center_vertical"
+            android:textColor="@color/disable_light"
+            android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
@@ -346,14 +368,19 @@
             android:layout_marginBottom="236dp"
             android:text="不良图片" />
 
-        <Spinner
-            android:id="@+id/site_spinner"
+        <TextView
+            android:id="@+id/position_spinner"
             android:layout_width="256dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
+            android:layout_height="35dp"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="95dp"
-            android:layout_marginBottom="281dp"
+            android:layout_marginEnd="57dp"
+            android:layout_marginBottom="270dp"
+            android:background="@drawable/edit_state"
+            android:drawableRight="@mipmap/spinner_down_arrow"
+            android:gravity="center_vertical"
+            android:textColor="@color/disable_light"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -373,10 +400,9 @@
             android:layout_height="20dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="359dp"
-            android:layout_marginTop="425dp"
+            android:layout_marginStart="360dp"
+            android:layout_marginTop="429dp"
             android:src="@mipmap/ic_edit" />
-
 
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>
