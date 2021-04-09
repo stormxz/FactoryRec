@@ -165,4 +165,6 @@
     <color name="menu_bg_start">#00C0CED8</color>
     <color name="menu_bg_end">#1098B0C1</color>
     <color name="color_61000000">#61000000</color>
+    
+    <color name="confirm_button">#FF1493</color>
 </resources>
