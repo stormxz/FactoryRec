@@ -2,6 +2,8 @@ package com.example.factoryrec.app;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -18,10 +20,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.factoryrec.R;
@@ -33,7 +37,10 @@ import com.google.zxing.integration.android.IntentResult;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 
 public class Fragment_Home extends MainFragment implements View.OnClickListener {
@@ -62,6 +69,15 @@ public class Fragment_Home extends MainFragment implements View.OnClickListener 
     private EditText mSNText;
     private ImageView mScanImage;
 
+    //发生时间
+    private TextView mTime1_Text;
+    private TextView mTime2_Text;
+    private int mYear;
+    private int mMonth;
+    private int mDay;
+    private int mHour;
+    private int mMinute;
+
     private SharedPreferences mSpinner_Value;
     private SharedPreferences.Editor mSpinner_Edit;
 
@@ -70,8 +86,9 @@ public class Fragment_Home extends MainFragment implements View.OnClickListener 
     private Resources res;
     private static final String REGULAR_EXPRESSION = "#";
     private String[] mCustoms_Array = {"张三", "李四", "王二", "盖伦", "德莱厄斯", "德莱厄斯", "德莱厄斯", "德莱厄斯", "德莱厄斯"};
-    private String[] mMachine_Array;
+    private String[] mMachine_Array, mSite_Array, mPosition_Array;
     private String[] mPhenom_Array, mPhenom_Array2_CP, mPhenom_Array2_CM, mPhenom_Array2_CF, mPhenom_Array2_CD, mPhenom_Array2_CA, mPhenom_Array2_CN;
+    private String mFirstMenuName;
     private ArrayAdapter mCustomAdapter;
 
     private int mCustom_which = -1;
@@ -113,12 +130,18 @@ public class Fragment_Home extends MainFragment implements View.OnClickListener 
         mSite_Edit_Image.setOnClickListener(this);
         mPosition_Edit_Image.setOnClickListener(this);
 
-        mPhenom_Spinner.addTextChangedListener(new EditextOnChangeListnerdata());
+        mPhenom_Spinner.addTextChangedListener(new EditextOnChangeListenerData());
 
         //二维码
         mSNText = view.findViewById(R.id.sn_editText);
         mScanImage = view.findViewById(R.id.scan_image);
         mScanImage.setOnClickListener(this);
+
+        //发生时间
+        mTime1_Text = view.findViewById(R.id.time1_text);
+        mTime2_Text = view.findViewById(R.id.time2_text);
+        mTime1_Text.setOnClickListener(this);
+        mTime2_Text.setOnClickListener(this);
 
         gViewPostPicture = view.findViewById(R.id.gViewPostPicture_home);
         super.onCreateView(inflater, container, savedInstanceState);
@@ -135,13 +158,17 @@ public class Fragment_Home extends MainFragment implements View.OnClickListener 
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initSharedPreferenceData();
+        initTimeData();
+        setTime();
     }
 
     private void initSharedPreferenceData() {
         mSpinner_Value = mActivity.getSharedPreferences("spinner_value", Context.MODE_PRIVATE);
         mSpinner_Edit = mSpinner_Value.edit();
         boolean inited = mSpinner_Value.contains("bad_phenomenon");
+        Log.i("cc", "inited = " + inited);
         if (!inited) {
+            //不良现象
             mPhenom_Array = res.getStringArray(R.array.bad_phenomenon);
             mPhenom_Array2_CP = res.getStringArray(R.array.CP00偏光版类不良);
             mPhenom_Array2_CM = res.getStringArray(R.array.CM00品味性不良);
@@ -156,8 +183,14 @@ public class Fragment_Home extends MainFragment implements View.OnClickListener 
             mSpinner_Edit.putString("CD00Dot类不良", array2StringBuilder(mPhenom_Array2_CD).toString());
             mSpinner_Edit.putString("CA00外观类不良", array2StringBuilder(mPhenom_Array2_CA).toString());
             mSpinner_Edit.putString("CN00Other", array2StringBuilder(mPhenom_Array2_CN).toString());
+            //不良位置
+            mPosition_Array = res.getStringArray(R.array.不良位置);
+            mSpinner_Edit.putString("不良位置", array2StringBuilder(mPosition_Array).toString());
             mSpinner_Edit.commit();
         } else {
+            mCustoms_Array = string2Array(mSpinner_Value.getString("客户", null));
+            mMachine_Array = string2Array(mSpinner_Value.getString("机种", null));
+            mSite_Array = string2Array(mSpinner_Value.getString("发生站点", null));
             mPhenom_Array = string2Array(mSpinner_Value.getString("bad_phenomenon", null));
             mPhenom_Array2_CP = string2Array(mSpinner_Value.getString("CP00偏光版类不良", null));
             mPhenom_Array2_CM = string2Array(mSpinner_Value.getString("CM00品味性不良", null));
@@ -165,6 +198,7 @@ public class Fragment_Home extends MainFragment implements View.OnClickListener 
             mPhenom_Array2_CD = string2Array(mSpinner_Value.getString("CD00Dot类不良", null));
             mPhenom_Array2_CA = string2Array(mSpinner_Value.getString("CA00外观类不良", null));
             mPhenom_Array2_CN = string2Array(mSpinner_Value.getString("CN00Other", null));
+            mPosition_Array = string2Array(mSpinner_Value.getString("不良位置", null));
         }
     }
 
@@ -176,18 +210,37 @@ public class Fragment_Home extends MainFragment implements View.OnClickListener 
                 stringBuilder.append(REGULAR_EXPRESSION);
             }
         }
-        Log.i("cc", "stringBuilder = " + stringBuilder.toString());
         return stringBuilder;
     }
 
     private String[] string2Array(String string) {
-        return string.split("#");
+        return string != null ? string.split("#") : null;
+    }
+
+    private void initTimeData() {
+        Calendar d = Calendar.getInstance(Locale.CHINA);
+        // 创建一个日历引用d，通过静态方法getInstance() 从指定时区 Locale.CHINA 获得一个日期实例
+        Date myDate = new Date();
+        // 创建一个Date实例
+        d.setTime(myDate);
+        // 设置日历的时间，把一个新建Date实例myDate传入
+        mYear = d.get(Calendar.YEAR);
+        mMonth = d.get(Calendar.MONTH);
+        mDay = d.get(Calendar.DAY_OF_MONTH);
+        mHour = d.get(Calendar.HOUR_OF_DAY); // 0-23
+        mMinute = d.get(Calendar.MINUTE);
+    }
+
+    protected void setTime() {
+        int m = mMonth + 1;
+        mTime1_Text.setText(mYear + "/" + m + "/" + mDay);
+        mTime2_Text.setText(mHour + ":" + mMinute);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.custom_spinner:
+            case R.id.custom_spinner:   //客户下拉菜单
                 AlertDialog.Builder custom_Builder = new AlertDialog.Builder(mActivity);
                 int custom_select = mCustom_which;
                 custom_Builder.setSingleChoiceItems(mCustoms_Array, custom_select,
@@ -203,15 +256,15 @@ public class Fragment_Home extends MainFragment implements View.OnClickListener 
                 custom_Builder.setTitle("客户");
                 custom_Builder.create().show();
                 break;
-            case R.id.machine_spinner:
+            case R.id.machine_spinner:   //机种下拉菜单
                 AlertDialog.Builder machine_Builder = new AlertDialog.Builder(mActivity);
                 int machine_select = mMachine_which;
-                machine_Builder.setSingleChoiceItems(mCustoms_Array, machine_select,
+                machine_Builder.setSingleChoiceItems(mMachine_Array, machine_select,
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 mMachine_which = which;
-                                mMachine_Spinner.setText(mCustoms_Array[which]);
+                                mMachine_Spinner.setText(mMachine_Array[which]);
                                 mMachine_Spinner.setTextColor(mActivity.getColor(R.color.primary_light));
                                 dialog.dismiss();
                             }
@@ -219,7 +272,7 @@ public class Fragment_Home extends MainFragment implements View.OnClickListener 
                 machine_Builder.setTitle("机种");
                 machine_Builder.create().show();
                 break;
-            case R.id.phenom_spinner:
+            case R.id.phenom_spinner:   //不良现象一级下拉菜单
                 AlertDialog.Builder phenom_Builder = new AlertDialog.Builder(mActivity);
                 int phenom_select = mPhenom_which;
                 phenom_Builder.setSingleChoiceItems(mPhenom_Array, phenom_select,
@@ -235,7 +288,7 @@ public class Fragment_Home extends MainFragment implements View.OnClickListener 
                 phenom_Builder.setTitle("不良现象（一）");
                 phenom_Builder.create().show();
                 break;
-            case R.id.phenom_spinner2:
+            case R.id.phenom_spinner2:   //不良现象二级下拉菜单
                 if (mPhenom_which == -1) {
                     Toast.makeText(mActivity, "请先选择一级菜单", Toast.LENGTH_SHORT).show();
                     return;
@@ -258,7 +311,39 @@ public class Fragment_Home extends MainFragment implements View.OnClickListener 
                 phenom2_Builder.setTitle("不良现象（二）");
                 phenom2_Builder.create().show();
                 break;
-            case R.id.scan_image:
+            case R.id.site_spinner:   //发生站点下拉菜单
+                AlertDialog.Builder site_Builder = new AlertDialog.Builder(mActivity);
+                int site_select = mSite_which;
+                site_Builder.setSingleChoiceItems(mSite_Array, site_select,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                mSite_which = which;
+                                mSite_Spinner.setText(mSite_Array[which]);
+                                mSite_Spinner.setTextColor(mActivity.getColor(R.color.primary_light));
+                                dialog.dismiss();
+                            }
+                        });
+                site_Builder.setTitle("发生站点");
+                site_Builder.create().show();
+                break;
+            case R.id.position_spinner:   //不良位置下拉菜单
+                AlertDialog.Builder position_Builder = new AlertDialog.Builder(mActivity);
+                int position_select = mPosition_which;
+                position_Builder.setSingleChoiceItems(mPosition_Array, position_select,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                mPosition_which = which;
+                                mPosition_Spinner.setText(mPosition_Array[which]);
+                                mPosition_Spinner.setTextColor(mActivity.getColor(R.color.primary_light));
+                                dialog.dismiss();
+                            }
+                        });
+                position_Builder.setTitle("不良位置");
+                position_Builder.create().show();
+                break;
+            case R.id.scan_image:    //二维码扫描按键
                 //已导入Google zxing二维码功能及第三方已实现的二维码扫描功能及界面，通过以下代码即可便捷启动扫码
                 IntentIntegrator integrator = new IntentIntegrator(mActivity);
                 integrator.setCaptureActivity(CaptureActivityAnyOrientation.class);
@@ -268,15 +353,49 @@ public class Fragment_Home extends MainFragment implements View.OnClickListener 
                 integrator.setBeepEnabled(true);
                 integrator.initiateScan();
                 break;
-            case R.id.edit_image_custom:
-                SpinnerEditDialog.Builder builder = new SpinnerEditDialog.Builder(mActivity, mCustoms_Array);
-                builder.setTitle("客户");
-                builder.create().show();
+            case R.id.time1_text:    //选择日期
+                new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        mYear = year;
+                        mMonth = month;
+                        mDay = dayOfMonth;
+                        setTime();
+                    }
+                }, mYear, mMonth, mDay).show();
+                break;
+            case R.id.time2_text:    //选择时间
+                new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        mHour = hourOfDay;
+                        mMinute = minute;
+                        setTime();
+                    }
+                }, mHour, mMinute, true).show();
+                break;
+            case R.id.edit_image_custom:      //客户下拉菜单编辑
+                buildSpinnerEditLayout("客户", mCustoms_Array);
+                break;
+            case R.id.edit_image_machine:     //机种下拉菜单编辑
+                buildSpinnerEditLayout("机种", mMachine_Array);
+                break;
+            case R.id.edit_image_phenom:      //不良现象下拉菜单编辑
+                buildSpinnerEditLayout("不良现象一", mPhenom_Array);
+                break;
+            case R.id.edit_image_phenom_2:    //不良现象二下拉菜单编辑
+                buildSpinner2EditLayout("不良现象二", mPhenom_Array);
+                break;
+            case R.id.edit_image_site:        //发生站点下拉菜单编辑
+                buildSpinnerEditLayout("发生站点", mSite_Array);
+                break;
+            case R.id.edit_image_position:    //不良位置下拉菜单编辑
+                buildSpinnerEditLayout("不良位置", mPosition_Array);
                 break;
         }
     }
 
-    private String[] phenomIndex(int index) {
+    public String[] phenomIndex(int index) {
         switch (index) {
             case 0:
                 return mPhenom_Array2_CP;
@@ -295,11 +414,113 @@ public class Fragment_Home extends MainFragment implements View.OnClickListener 
         }
     }
 
-    private void buildSpinnerEditLayout() {
-
+    private void buildSpinnerEditLayout(final String title, String[] array) {
+        final SpinnerEditDialog.Builder builder = new SpinnerEditDialog.Builder(mActivity, array);
+        builder.setTitle(title);
+        builder.setButtonConfirm(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (title) {
+                    case "客户":
+                        mCustoms_Array = builder.getNewArray();
+                        mSpinner_Edit.putString(title, array2StringBuilder(mCustoms_Array).toString());
+                        break;
+                    case "机种":
+                        mMachine_Array = builder.getNewArray();
+                        mSpinner_Edit.putString(title, array2StringBuilder(mMachine_Array).toString());
+                        break;
+                    case "不良现象一":
+                        mPhenom_Array = builder.getNewArray();
+                        mSpinner_Edit.putString("bad_phenomenon", array2StringBuilder(mPhenom_Array).toString());
+                        break;
+                    case "CP00偏光版类不良":
+                        mPhenom_Array2_CP = builder.getNewArray();
+                        mSpinner_Edit.putString(title, array2StringBuilder(mPhenom_Array2_CP).toString());
+                        break;
+                    case "CM00品味性不良":
+                        mPhenom_Array2_CM = builder.getNewArray();
+                        mSpinner_Edit.putString(title, array2StringBuilder(mPhenom_Array2_CM).toString());
+                        break;
+                    case "CF00功能性不良":
+                        mPhenom_Array2_CF = builder.getNewArray();
+                        mSpinner_Edit.putString(title, array2StringBuilder(mPhenom_Array2_CF).toString());
+                        break;
+                    case "CA00外观类不良":
+                        mPhenom_Array2_CA = builder.getNewArray();
+                        mSpinner_Edit.putString(title, array2StringBuilder(mPhenom_Array2_CA).toString());
+                        break;
+                    case "CD00Dot类不良":
+                        mPhenom_Array2_CD = builder.getNewArray();
+                        mSpinner_Edit.putString(title, array2StringBuilder(mPhenom_Array2_CD).toString());
+                        break;
+                    case "CN00Other":
+                        mPhenom_Array2_CN = builder.getNewArray();
+                        mSpinner_Edit.putString(title, array2StringBuilder(mPhenom_Array2_CN).toString());
+                        break;
+                    case "发生站点":
+                        mSite_Array = builder.getNewArray();
+                        mSpinner_Edit.putString(title, array2StringBuilder(mSite_Array).toString());
+                        break;
+                    case "不良位置":
+                        mPosition_Array = builder.getNewArray();
+                        mSpinner_Edit.putString(title, array2StringBuilder(mPosition_Array).toString());
+                        break;
+                }
+                mSpinner_Edit.commit();
+            }
+        });
+        builder.create().show();
     }
 
-    private class EditextOnChangeListnerdata implements TextWatcher {
+    public void setSelectFirstMenuName(String name) {
+        Log.i("cc", "setSelectFirstMenuName = " + mFirstMenuName);
+        mFirstMenuName = name;
+    }
+
+    private void buildSpinner2EditLayout(final String title, String[] array) {
+        final SpinnerEditDialog.Builder builder = new SpinnerEditDialog.Builder(mActivity, array, this);
+        builder.setTitle(title);
+        builder.setButtonConfirm(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveSecondaryMenu(builder.getNewArray());
+            }
+        });
+        builder.create().show();
+    }
+
+    public void saveSecondaryMenu(String[] array) {
+        switch (mFirstMenuName) {
+            case "CP00偏光版类不良":
+                mPhenom_Array2_CP = array;
+                mSpinner_Edit.putString(mFirstMenuName, array2StringBuilder(mPhenom_Array2_CP).toString());
+                break;
+            case "CM00品味性不良":
+                mPhenom_Array2_CM = array;
+                mSpinner_Edit.putString(mFirstMenuName, array2StringBuilder(mPhenom_Array2_CM).toString());
+                break;
+            case "CF00功能性不良":
+                mPhenom_Array2_CF = array;
+                mSpinner_Edit.putString(mFirstMenuName, array2StringBuilder(mPhenom_Array2_CF).toString());
+                break;
+            case "CA00外观类不良":
+                mPhenom_Array2_CA = array;
+                mSpinner_Edit.putString(mFirstMenuName, array2StringBuilder(mPhenom_Array2_CA).toString());
+                break;
+            case "CD00Dot类不良":
+                mPhenom_Array2_CD = array;
+                mSpinner_Edit.putString(mFirstMenuName, array2StringBuilder(mPhenom_Array2_CD).toString());
+                break;
+            case "CN00Other":
+                mPhenom_Array2_CN = array;
+                mSpinner_Edit.putString(mFirstMenuName, array2StringBuilder(mPhenom_Array2_CN).toString());
+                break;
+        }
+        mSpinner_Edit.commit();
+    }
+
+
+    private class EditextOnChangeListenerData implements TextWatcher {
         private CharSequence tmp;
 
         @Override

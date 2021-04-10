@@ -221,4 +221,36 @@
         <item>CN03 Array X品</item>
         <item>CN04 Flicker无法调至最佳</item>
     </string-array>
+
+    <string-array name="不良位置" translatable="false">
+        <item>Z01 1区</item>
+        <item>Z02 2区</item>
+        <item>Z03 3区</item>
+        <item>Z04 4区</item>
+        <item>Z05 5区</item>
+        <item>Z06 6区</item>
+        <item>Z07 7区</item>
+        <item>Z08 8区</item>
+        <item>Z09 9区</item>
+        <item>Z10 其他区域</item>
+        <item>Z11 147区</item>
+        <item>Z12 258区</item>
+        <item>Z13 369区</item>
+        <item>Z14 123区</item>
+        <item>Z15 456区</item>
+        <item>Z16 789区</item>
+        <item>Z17 12区</item>
+        <item>Z18 14区</item>
+        <item>Z19 23区</item>
+        <item>Z20 25区</item>
+        <item>Z21 36区</item>
+        <item>Z22 45区</item>
+        <item>Z23 47区</item>
+        <item>Z24 56区</item>
+        <item>Z25 58区</item>
+        <item>Z26 69区</item>
+        <item>Z27 78区</item>
+        <item>Z28 89区</item>
+        <item>Z29 整面</item>
+    </string-array>
 </resources>
