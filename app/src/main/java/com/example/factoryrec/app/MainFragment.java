@@ -151,7 +151,6 @@ public class MainFragment extends Fragment {
 
     }
 
-
     protected void initData() {
         filePaths = new ArrayList<String>();
         PHOTO_SIZE = (ScreenUtil.getScreenWidth(getContext()) - DensityUtil.dp2px(getContext(), 50)) / 5;

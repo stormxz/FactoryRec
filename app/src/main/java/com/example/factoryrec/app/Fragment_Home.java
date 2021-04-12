@@ -234,7 +234,19 @@ public class Fragment_Home extends MainFragment implements View.OnClickListener 
     protected void setTime() {
         int m = mMonth + 1;
         mTime1_Text.setText(mYear + "/" + m + "/" + mDay);
-        mTime2_Text.setText(mHour + ":" + mMinute);
+        mTime2_Text.setText(FormatTime(mHour) + ":" + FormatTime(mMinute));
+        mItem.setOccDate(mYear + "/" + m + "/" + mDay);
+        mItem.setOccTime(FormatTime(mHour) + ":" + FormatTime(mMinute));
+    }
+
+    private String FormatTime(int time) {
+        String str;
+        if (time < 10) {
+            str = "0" + time;
+        } else {
+            str = "" + time;
+        }
+        return str;
     }
 
     @Override
@@ -249,6 +261,7 @@ public class Fragment_Home extends MainFragment implements View.OnClickListener 
                             public void onClick(DialogInterface dialog, int which) {
                                 mCustom_which = which;
                                 mCustom_Spinner.setText(mCustoms_Array[which]);
+                                mItem.setCustomer(mCustoms_Array[which]);
                                 mCustom_Spinner.setTextColor(mActivity.getColor(R.color.primary_light));
                                 dialog.dismiss();
                             }
@@ -265,6 +278,7 @@ public class Fragment_Home extends MainFragment implements View.OnClickListener 
                             public void onClick(DialogInterface dialog, int which) {
                                 mMachine_which = which;
                                 mMachine_Spinner.setText(mMachine_Array[which]);
+                                mItem.setMachineType(mMachine_Array[which]);
                                 mMachine_Spinner.setTextColor(mActivity.getColor(R.color.primary_light));
                                 dialog.dismiss();
                             }
@@ -281,6 +295,7 @@ public class Fragment_Home extends MainFragment implements View.OnClickListener 
                             public void onClick(DialogInterface dialog, int which) {
                                 mPhenom_which = which;
                                 mPhenom_Spinner.setText(mPhenom_Array[which]);
+                                mItem.setBadPhenom(mPhenom_Array[which]);
                                 mPhenom_Spinner.setTextColor(mActivity.getColor(R.color.primary_light));
                                 dialog.dismiss();
                             }
@@ -303,6 +318,7 @@ public class Fragment_Home extends MainFragment implements View.OnClickListener 
                                 mPhenom2_which = which;
                                 if (array_select != null) {
                                     mPhenom2_Spinner.setText(array_select[which]);
+                                    mItem.setBadPhenom2(array_select[which]);
                                     mPhenom2_Spinner.setTextColor(mActivity.getColor(R.color.primary_light));
                                 }
                                 dialog.dismiss();
@@ -320,6 +336,7 @@ public class Fragment_Home extends MainFragment implements View.OnClickListener 
                             public void onClick(DialogInterface dialog, int which) {
                                 mSite_which = which;
                                 mSite_Spinner.setText(mSite_Array[which]);
+                                mItem.setOccSite(mSite_Array[which]);
                                 mSite_Spinner.setTextColor(mActivity.getColor(R.color.primary_light));
                                 dialog.dismiss();
                             }
@@ -336,6 +353,7 @@ public class Fragment_Home extends MainFragment implements View.OnClickListener 
                             public void onClick(DialogInterface dialog, int which) {
                                 mPosition_which = which;
                                 mPosition_Spinner.setText(mPosition_Array[which]);
+                                mItem.setBadPosition(mPosition_Array[which]);
                                 mPosition_Spinner.setTextColor(mActivity.getColor(R.color.primary_light));
                                 dialog.dismiss();
                             }
@@ -556,6 +574,7 @@ public class Fragment_Home extends MainFragment implements View.OnClickListener 
                                 long fileSize = FileUtil.getFileSize(new File(file));
                                 if (fileSize < MAX_PHOTO_SIZE) {
                                     newImageUris.add(file);
+                                    mItem.setHome_BadPic(newImageUris);
                                     photoList.add(new File(file));
                                 }
                             }
