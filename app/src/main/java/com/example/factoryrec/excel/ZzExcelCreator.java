@@ -16,6 +16,7 @@
 
 package com.example.factoryrec.excel;
 
+import android.util.Log;
 import android.util.SparseIntArray;
 
 import com.example.factoryrec.util.ImageUtil;
@@ -194,9 +195,8 @@ public class ZzExcelCreator implements ExcelManager {
         InputStream is = null;
         byte[] data = null;
         try {
-            is = new FileInputStream("mnt/sdcard/DCIM/Camera/IMG_20210407_154114_BURST2.jpg");
+            is = new FileInputStream(imagePath);
             data = ImageUtil.toByteArray(is);
-
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
