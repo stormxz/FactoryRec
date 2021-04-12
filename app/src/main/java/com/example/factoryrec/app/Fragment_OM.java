@@ -73,6 +73,7 @@ public class Fragment_OM extends MainFragment {
                                 long fileSize = FileUtil.getFileSize(new File(file));
                                 if (fileSize < MAX_PHOTO_SIZE) {
                                     newImageUris.add(file);
+                                    mItem.setOM_BadPic(newImageUris);
                                     photoList.add(new File(file));
                                 }
                             }

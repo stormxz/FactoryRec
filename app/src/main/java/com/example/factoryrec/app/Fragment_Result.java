@@ -15,6 +15,8 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 
 import com.example.factoryrec.R;
+import com.example.factoryrec.util.PdfCreator;
+import com.example.factoryrec.util.ProductItem;
 
 
 public class Fragment_Result extends MainFragment {
@@ -78,9 +80,17 @@ public class Fragment_Result extends MainFragment {
             public void onClick(View v) {
                 //各种条件判断后，进行创建excel pdf 并且提交
                 Log.e("stormxz", " display text = " + mItem.getDisplayText() + "  om text = " + mItem.getOMText() + "  signal text = " + mItem.getSignalText() + "  result text = " + mItem.getConclusion());
+                if (mPDF.isChecked()) {
+                    PdfCreator pc = new PdfCreator(mActivity, Fragment_Result.this);
+                    pc.generatePdf();
+                }
             }
         });
 
         return view;
+    }
+
+    public ProductItem getItem() {
+        return mItem;
     }
 }

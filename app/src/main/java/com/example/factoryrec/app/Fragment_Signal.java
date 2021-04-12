@@ -78,6 +78,7 @@ public class Fragment_Signal extends MainFragment {
                                 long fileSize = FileUtil.getFileSize(new File(file));
                                 if (fileSize < MAX_PHOTO_SIZE) {
                                     newImageUris.add(file);
+                                    mItem.setSignal_BadPic(newImageUris);
                                     photoList.add(new File(file));
                                 }
                             }

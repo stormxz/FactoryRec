@@ -1,5 +1,7 @@
 package com.example.factoryrec.util;
 
+import java.util.List;
+
 public class ProductItem {
 
     private static ProductItem mItem;
@@ -7,7 +9,9 @@ public class ProductItem {
     private String mCustomer;           //客户
     private String mMachineType;        //机种
     private String mSN;                 //SN
-    private String mBadPhenom;          //不良现象
+    private String mBadPhenom;          //不良现象一级选项
+    private String mBadPhenom2;         //不良现象二级选项
+    private String mOccDate;            //发生日期
     private String mOccTime;            //发生时间
     private String mOccSite;            //发生站点
     private String mBadPosition;        //不良位置
@@ -15,6 +19,11 @@ public class ProductItem {
     private String mOMText;             //OM确认信息
     private String mSignalText;         //讯号量测确认信息
     private String mConclusion;         //结论
+
+    private List<String> mHome_BadPic;        //主页不良图片
+    private List<String> mDisplay_BadPic;     //外观不良图片
+    private List<String> mOM_BadPic;          //OM不良图片
+    private List<String> mSignal_BadPic;      //讯号量测不良图片
 
     public static synchronized ProductItem getInstance() {
         if (mItem == null) {
@@ -53,6 +62,22 @@ public class ProductItem {
 
     public void setBadPhenom(String mBadPhenom) {
         this.mBadPhenom = mBadPhenom;
+    }
+
+    public String getBadPhenom2() {
+        return mBadPhenom2;
+    }
+
+    public void setBadPhenom2(String mBadPhenom2) {
+        this.mBadPhenom2 = mBadPhenom2;
+    }
+
+    public String getOccDate() {
+        return mOccDate;
+    }
+
+    public void setOccDate(String mOccDate) {
+        this.mOccDate = mOccDate;
     }
 
     public String getOccTime() {
@@ -109,6 +134,38 @@ public class ProductItem {
 
     public void setConclusion(String mConclusion) {
         this.mConclusion = mConclusion;
+    }
+
+    public List<String> getHome_BadPic() {
+        return mHome_BadPic;
+    }
+
+    public void setHome_BadPic(List<String> home_badPic) {
+        this.mHome_BadPic = home_badPic;
+    }
+
+    public List<String> getDisplay_BadPic() {
+        return mDisplay_BadPic;
+    }
+
+    public void setDisplay_BadPic(List<String> display_badPic) {
+        this.mDisplay_BadPic = display_badPic;
+    }
+
+    public List<String> getOM_BadPic() {
+        return mOM_BadPic;
+    }
+
+    public void setOM_BadPic(List<String> OM_badPic) {
+        this.mOM_BadPic = OM_badPic;
+    }
+
+    public List<String> getSignal_BadPic() {
+        return mSignal_BadPic;
+    }
+
+    public void setSignal_BadPic(List<String> signal_badPic) {
+        this.mSignal_BadPic = signal_badPic;
     }
 
 }
