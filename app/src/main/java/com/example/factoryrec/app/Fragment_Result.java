@@ -15,6 +15,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 
 import com.example.factoryrec.R;
+import com.example.factoryrec.excel.ExcelCreator;
 import com.example.factoryrec.util.PdfCreator;
 import com.example.factoryrec.util.ProductItem;
 
@@ -83,6 +84,10 @@ public class Fragment_Result extends MainFragment {
                 if (mPDF.isChecked()) {
                     PdfCreator pc = new PdfCreator(mActivity, Fragment_Result.this);
                     pc.generatePdf();
+                }
+                if (mExcel.isChecked()) {
+                    ExcelCreator excelCreator = new ExcelCreator(mActivity, Fragment_Result.this);
+                    excelCreator.generateExcel();
                 }
             }
         });
