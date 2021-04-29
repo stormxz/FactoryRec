@@ -1,5 +1,7 @@
 package com.example.factoryrec.app;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,6 +15,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.factoryrec.R;
 import com.example.factoryrec.excel.ExcelCreator;
@@ -32,6 +35,10 @@ public class Fragment_Result extends MainFragment {
 
     private Button btnSubmit = null;
 
+    // 记录当天提交个数
+    private SharedPreferences mSubmitCount_Value;
+    private SharedPreferences.Editor mSubmitCount_Edit;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -40,6 +47,9 @@ public class Fragment_Result extends MainFragment {
         mPDF = view.findViewById(R.id.addpdf);
         mShowLogo = view.findViewById(R.id.showlogo);
         mResultEditText = view.findViewById(R.id.result_et);
+
+        mSubmitCount_Value = mActivity.getSharedPreferences("submit_count", Context.MODE_PRIVATE);
+        mSubmitCount_Edit = mSubmitCount_Value.edit();
 
         mResultEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -81,14 +91,20 @@ public class Fragment_Result extends MainFragment {
             public void onClick(View v) {
                 //各种条件判断后，进行创建excel pdf 并且提交
                 Log.e("stormxz", " display text = " + mItem.getDisplayText() + "  om text = " + mItem.getOMText() + "  signal text = " + mItem.getSignalText() + "  result text = " + mItem.getConclusion());
-                if (mPDF.isChecked()) {
-                    PdfCreator pc = new PdfCreator(mActivity, Fragment_Result.this);
-                    pc.generatePdf();
-                }
-                if (mExcel.isChecked()) {
-                    ExcelCreator excelCreator = new ExcelCreator(mActivity, Fragment_Result.this);
-                    excelCreator.generateExcel();
-                }
+                Toast.makeText(getContext(), "正在保存...", Toast.LENGTH_SHORT).show();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (mPDF.isChecked()) {
+                            PdfCreator pc = new PdfCreator(mActivity, Fragment_Result.this);
+                            pc.generatePdf();
+                        }
+                        if (mExcel.isChecked()) {
+                            ExcelCreator excelCreator = new ExcelCreator(mActivity, Fragment_Result.this, mSubmitCount_Value, mSubmitCount_Edit);
+                            excelCreator.generateExcel();
+                        }
+                    }
+                }).start();
             }
         });
 
