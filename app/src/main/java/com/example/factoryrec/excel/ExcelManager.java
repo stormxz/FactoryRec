@@ -247,13 +247,13 @@ public interface ExcelManager {
     String getCellContent(int col, int row);
 
     /**
-     * 获取单元格内容
+     * 添加图片
      *
      * @param col 列
      * @param row 行
      * @return 值
      */
-    ZzExcelCreator addImage(String imagePath, int col, int row, int width, int height);
+    ZzExcelCreator addImage(String imagePath, int col, int row, int width, int height, byte[] data);
 
     /**
      * 结束操作

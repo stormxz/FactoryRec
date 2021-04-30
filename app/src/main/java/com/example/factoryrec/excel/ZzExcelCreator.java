@@ -189,20 +189,21 @@ public class ZzExcelCreator implements ExcelManager {
      * @param height  高占
      */
     @Override
-    public ZzExcelCreator addImage(String imagePath, int col, int row, int width, int height) {
+    public ZzExcelCreator addImage(String imagePath, int col, int row, int width, int height, byte[] data) {
         checkNullFirst();
         checkNullSecond();
-        InputStream is = null;
-        byte[] data = null;
-        try {
-            is = new FileInputStream(imagePath);
-            data = ImageUtil.toByteArray(is);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        writableSheet.addImage(new WritableImage(col, row, width, height,data));
+//        InputStream is = null;
+//        byte[] data = null;
+//        try {
+//            is = new FileInputStream(imagePath);
+//            data = ImageUtil.toByteArray(is);
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+        WritableImage writableImage = new WritableImage(col, row, width, height,data);
+        writableSheet.addImage(writableImage);
 
         return this;
     }
@@ -350,7 +351,7 @@ public class ZzExcelCreator implements ExcelManager {
     public ZzExcelCreator setRowHeight(int position, int height) throws RowsExceededException {
         checkNullFirst();
         checkNullSecond();
-        writableSheet.setRowView(position, height);
+        writableSheet.setRowView(position, height, false);
         return this;
     }
 
