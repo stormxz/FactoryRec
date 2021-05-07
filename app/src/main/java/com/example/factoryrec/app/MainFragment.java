@@ -62,7 +62,7 @@ public class MainFragment extends Fragment {
     protected static final long MAX_PHOTO_SIZE = 5 * 1048576;
 
     // 图片上限个数
-    protected static final int IMAGE_COUNT_MAX = 8;
+    protected static int IMAGE_COUNT_MAX = 2;
 
     // 子线程
     protected Thread mThread;
@@ -98,9 +98,9 @@ public class MainFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                 if (Build.VERSION.SDK_INT < 23) {
-                    showPictureSelector();
+                    showPictureSelector(2);
                 } else {
-                    getPremission();
+                    getPremission(2);
                 }
 
             }
@@ -110,7 +110,8 @@ public class MainFragment extends Fragment {
     /**
      * 打开图片选择
      */
-    protected void showPictureSelector() {
+    protected void showPictureSelector(int image_count_max) {
+        IMAGE_COUNT_MAX = image_count_max;
 
         Intent intent = new Intent(getContext(), MultiImageSelectorActivity.class);
 
@@ -130,7 +131,7 @@ public class MainFragment extends Fragment {
         getActivity().startActivityForResult(intent, PHOTOS);
     }
 
-    protected void getPremission() {
+    protected void getPremission(int image_count_max) {
 
         if (ContextCompat.checkSelfPermission(getContext(),
                 Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -146,7 +147,7 @@ public class MainFragment extends Fragment {
                     new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
             //            }
         } else {
-            showPictureSelector();
+            showPictureSelector(image_count_max);
         }
 
     }
@@ -272,6 +273,7 @@ public class MainFragment extends Fragment {
                             if (fileSize > 0.8 * 1048576) {
                                 options.inSampleSize = 6;
                             }
+                            Log.i("cc", "setImageList : path = " + path);
                             Bitmap bitmap = BitmapFactory.decodeFile(path, options);
                             if (bitmap != null) {
                                 Bitmap zoomBitmap = ImageUtil.zoomBitmap(bitmap, PHOTO_SIZE, PHOTO_SIZE);
@@ -283,7 +285,7 @@ public class MainFragment extends Fragment {
                         }
                         postPictureData.clear();
                         postPictureData.addAll(bitmaps);
-                        if (bitmaps.size() < 8) {
+                        if (bitmaps.size() < IMAGE_COUNT_MAX) {
                             postPictureData.add(bitmap);
                         }
 

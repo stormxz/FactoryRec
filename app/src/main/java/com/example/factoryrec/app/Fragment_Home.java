@@ -1,5 +1,6 @@
 package com.example.factoryrec.app;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -8,22 +9,23 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -300,7 +302,7 @@ public class Fragment_Home extends MainFragment implements View.OnClickListener 
                                 dialog.dismiss();
                             }
                         });
-                phenom_Builder.setTitle("不良现象（一）");
+                phenom_Builder.setTitle("不良大类");
                 phenom_Builder.create().show();
                 break;
             case R.id.phenom_spinner2:   //不良现象二级下拉菜单
@@ -324,7 +326,7 @@ public class Fragment_Home extends MainFragment implements View.OnClickListener 
                                 dialog.dismiss();
                             }
                         });
-                phenom2_Builder.setTitle("不良现象（二）");
+                phenom2_Builder.setTitle("不良现象");
                 phenom2_Builder.create().show();
                 break;
             case R.id.site_spinner:   //发生站点下拉菜单
@@ -362,14 +364,15 @@ public class Fragment_Home extends MainFragment implements View.OnClickListener 
                 position_Builder.create().show();
                 break;
             case R.id.scan_image:    //二维码扫描按键
-                //已导入Google zxing二维码功能及第三方已实现的二维码扫描功能及界面，通过以下代码即可便捷启动扫码
-                IntentIntegrator integrator = new IntentIntegrator(mActivity);
-                integrator.setCaptureActivity(CaptureActivityAnyOrientation.class);
-                integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
-                integrator.setPrompt("Scan a barcode");
-                integrator.setCameraId(0);
-                integrator.setBeepEnabled(true);
-                integrator.initiateScan();
+                if (ContextCompat.checkSelfPermission(getContext(),
+                        Manifest.permission.CAMERA)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(getActivity(),
+                            new String[]{Manifest.permission.CAMERA}, 0);
+                } else {
+                    startScanCode();
+                }
+
                 break;
             case R.id.time1_text:    //选择日期
                 new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
@@ -553,6 +556,17 @@ public class Fragment_Home extends MainFragment implements View.OnClickListener 
         @Override
         public void afterTextChanged(Editable editable) {
         }
+    }
+
+    private void startScanCode() {
+        //已导入Google zxing二维码功能及第三方已实现的二维码扫描功能及界面，通过以下代码即可便捷启动扫码
+        IntentIntegrator integrator = new IntentIntegrator(mActivity);
+        integrator.setCaptureActivity(CaptureActivityAnyOrientation.class);
+        integrator.setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES);
+        integrator.setPrompt("Scan a barcode");
+        integrator.setCameraId(0);
+        integrator.setBeepEnabled(true);
+        integrator.initiateScan();
     }
 
     @Override
