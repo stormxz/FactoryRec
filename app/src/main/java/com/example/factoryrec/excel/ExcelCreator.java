@@ -33,6 +33,7 @@ public class ExcelCreator {
 
     private MainActivity mActivity;
     private ProductItem mItem;
+    private Fragment_Result fragment_result;
     // 记录当天提交个数
     private SharedPreferences mSubmitCount_Value;
     private SharedPreferences.Editor mSubmitCount_Edit;
@@ -40,12 +41,14 @@ public class ExcelCreator {
 
     public ExcelCreator(MainActivity activity, Fragment_Result result, SharedPreferences submitCount_Value, SharedPreferences.Editor submitCount_Edit) {
         mActivity = activity;
+        fragment_result = result;
         mItem = result.getItem();
         mSubmitCount_Value = submitCount_Value;
         mSubmitCount_Edit = submitCount_Edit;
     }
 
     public void generateExcel() {
+        Log.e("stormxz", "stormxz write begin");
         ZzExcelCreator excelCreator = ZzExcelCreator.getInstance();
         try {
             // 1. 获取当前时间，创建目录
@@ -109,10 +112,9 @@ public class ExcelCreator {
             }
 
 
-            Log.e("stormxz", "stormxz write begin");
             excelCreator.close();
             Log.e("stormxz", "stormxz write end");
-
+//            fragment_result.setEnable();
         } catch (IOException | WriteException | BiffException/* | BiffException*/ e) {
             Log.e("stormxz", " excel is not check e = " + e);
             e.printStackTrace();
@@ -293,8 +295,8 @@ public class ExcelCreator {
         options.inSampleSize = 1;
         WeakReference<Bitmap> wfb = new WeakReference<>(BitmapFactory.decodeFile(pathName, options));
         Bitmap bitmap = wfb.get();
-        int bitmapW = (int) (bitmap.getWidth() * 0.15);
-        int bitmapH = (int) (bitmap.getHeight() * 0.15);
+        int bitmapW = (int) (bitmap.getWidth() * 0.7);
+        int bitmapH = (int) (bitmap.getHeight() * 0.7);
         WeakReference<Bitmap> nwfb = new WeakReference<>(Bitmap.createScaledBitmap(bitmap, bitmapW, bitmapH, false));
         Bitmap newBM = nwfb.get();
         bitmap.recycle();

@@ -36,6 +36,8 @@ import com.example.factoryrec.ui.SpinnerEditDialog;
 import com.example.factoryrec.util.FileUtil;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.luck.picture.lib.config.PictureConfig;
+import com.luck.picture.lib.entity.LocalMedia;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -104,6 +106,7 @@ public class Fragment_Home extends MainFragment implements View.OnClickListener 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_menu_home, container, false);
+        mRecyclerView = view.findViewById(R.id.recycler_home);
         //下拉菜单
         mCustom_Spinner = (TextView) view.findViewById(R.id.custom_spinner);
         mMachine_Spinner = (TextView) view.findViewById(R.id.machine_spinner);
@@ -145,7 +148,6 @@ public class Fragment_Home extends MainFragment implements View.OnClickListener 
         mTime1_Text.setOnClickListener(this);
         mTime2_Text.setOnClickListener(this);
 
-        gViewPostPicture = view.findViewById(R.id.gViewPostPicture_home);
         super.onCreateView(inflater, container, savedInstanceState);
         return view;
     }
@@ -574,28 +576,16 @@ public class Fragment_Home extends MainFragment implements View.OnClickListener 
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
             switch (requestCode) {
-                case PHOTOS:// 图片
-                    if (data != null) {
-                        List<String> imageUris = data.getStringArrayListExtra(
-                                MultiImageSelectorActivity.EXTRA_RESULT);
-                        Log.e("stormxz", "onActivityResult imageUris: " + imageUris);
-                        List<String> newImageUris = new ArrayList<String>();
+                case PictureConfig.CHOOSE_REQUEST:
+                    if (requestCode == PictureConfig.CHOOSE_REQUEST) {// 图片选择结果回调
 
-                        // 过滤超过图片限制的图片
-                        if (imageUris != null) {
-                            photoList.clear();
-                            for (String file : imageUris) {
-                                long fileSize = FileUtil.getFileSize(new File(file));
-                                if (fileSize < MAX_PHOTO_SIZE) {
-                                    newImageUris.add(file);
-                                    mItem.setHome_BadPic(newImageUris);
-                                    photoList.add(new File(file));
-                                }
+                        List<String> newImageUris = new ArrayList<String>();
+                        if (selectList != null) {
+                            for (int i = 0; i < selectList.size(); i++) {
+                                newImageUris.add(selectList.get(i).getCompressPath());
                             }
+                            mItem.setHome_BadPic(newImageUris);
                         }
-                        // 刷新图片列表
-                        Log.e("stormxz", "onActivityResult newImageUris: " + newImageUris);
-                        setImageList(newImageUris);
                     }
                     break;
                 case SCAN_REQUEST_CODE:
@@ -613,6 +603,17 @@ public class Fragment_Home extends MainFragment implements View.OnClickListener 
                     }
                     break;
             }
+        }
+    }
+
+    public void updateDeleteImages(List<LocalMedia> list) {
+
+        List<String> newImageUris = new ArrayList<String>();
+        if (list != null) {
+            for (int i = 0; i < list.size(); i++) {
+                newImageUris.add(list.get(i).getCompressPath());
+            }
+            mItem.setHome_BadPic(newImageUris);
         }
     }
 }
