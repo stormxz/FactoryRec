@@ -65,15 +65,14 @@
                     android:textColor="@color/content_text"
                     android:textSize="16sp" />
 
-                <com.example.factoryrec.ui.ScrollGridView
-                    android:id="@+id/gViewPostPicture_signal"
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_single"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
                     android:layout_marginTop="5dp"
-                    android:listSelector="@android:color/transparent"
-                    android:numColumns="4"
-                    android:scrollbars="none" />
+                    android:overScrollMode="never"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

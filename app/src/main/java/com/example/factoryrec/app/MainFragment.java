@@ -1,6 +1,7 @@
 package com.example.factoryrec.app;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -15,6 +16,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,8 +25,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.factoryrec.R;
+import com.example.factoryrec.pictureselector.FullyGridLayoutManager;
+import com.example.factoryrec.pictureselector.GridImageAdapter;
 import com.example.factoryrec.selector.MultiImageSelectorActivity;
 import com.example.factoryrec.ui.ScrollGridView;
 import com.example.factoryrec.util.DensityUtil;
@@ -31,56 +37,36 @@ import com.example.factoryrec.util.FileUtil;
 import com.example.factoryrec.util.ImageUtil;
 import com.example.factoryrec.util.ProductItem;
 import com.example.factoryrec.util.ScreenUtil;
+import com.luck.picture.lib.PictureSelector;
+import com.luck.picture.lib.config.PictureConfig;
+import com.luck.picture.lib.config.PictureMimeType;
+import com.luck.picture.lib.entity.LocalMedia;
+import com.luck.picture.lib.permissions.Permission;
+import com.luck.picture.lib.permissions.RxPermissions;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import io.reactivex.functions.Consumer;
+
+import static android.app.Activity.RESULT_OK;
 
 public class MainFragment extends Fragment {
 
     protected MainActivity mActivity;
     protected ProductItem mItem;
 
-    // 图片附件适配器
-    protected GridViewAdapter postPictureAdapter;
-
-    // 图片附件
-    protected ScrollGridView gViewPostPicture = null;
-
-    // 图片附件数据
-    protected List<Bitmap> postPictureData;
-
-    protected Bitmap bitmap;
-
-    // 图片尺寸大小
-    protected int PHOTO_SIZE = 60;
-
-    // 图片
-    public static final int PHOTOS = 2;
-
-    // 图片大小上限
-    protected static final long MAX_PHOTO_SIZE = 5 * 1048576;
-
-    // 图片上限个数
-    protected static int IMAGE_COUNT_MAX = 2;
-
-    // 子线程
-    protected Thread mThread;
-
-    protected List<File> photoList;
-
-    // 图片文件路径
-    protected ArrayList<String> filePaths;
+    private int maxSelectNum = 2;
+    protected List<LocalMedia> selectList = new ArrayList<>();
+    protected GridImageAdapter adapter;
+    protected RecyclerView mRecyclerView;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         // 初始化数据
-        initData();
-        postPictureAdapter = new Fragment_Display.GridViewAdapter();
-        gViewPostPicture.setAdapter(postPictureAdapter);
-        // 设置视图组件监听器
-        setViewListener();
+        initWidget();
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
@@ -91,47 +77,78 @@ public class MainFragment extends Fragment {
         mItem = mActivity.getItem();
     }
 
-    protected void setViewListener() {
-        // 设置图片附件点击监听器
-        gViewPostPicture.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
+    private void initWidget() {
+        FullyGridLayoutManager manager = new FullyGridLayoutManager(getContext(), 3, GridLayoutManager.VERTICAL, false);
+        mRecyclerView.setLayoutManager(manager);
+        adapter = new GridImageAdapter(getContext(), onAddPicClickListener);
+        adapter.setList(selectList);
+        adapter.setSelectMax(maxSelectNum);
+        mRecyclerView.setAdapter(adapter);
+        adapter.setOnItemClickListener(new GridImageAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                if (Build.VERSION.SDK_INT < 23) {
-                    showPictureSelector(2);
-                } else {
-                    getPremission(2);
+            public void onItemClick(int position, View v) {
+                if (selectList.size() > 0) {
+                    LocalMedia media = selectList.get(position);
+                    String pictureType = media.getPictureType();
+                    int mediaType = PictureMimeType.pictureToVideo(pictureType);
+                    switch (mediaType) {
+                        case 1:
+                            // 预览图片 可自定长按保存路径
+                            //PictureSelector.create(MainActivity.this).externalPicturePreview(position, "/custom_file", selectList);
+                            PictureSelector.create(getActivity()).externalPicturePreview(position, selectList);
+                            break;
+                        case 2:
+                            // 预览视频
+                            PictureSelector.create(getActivity()).externalPictureVideo(media.getPath());
+                            break;
+                        case 3:
+                            // 预览音频
+                            PictureSelector.create(getActivity()).externalPictureAudio(media.getPath());
+                            break;
+                    }
                 }
-
             }
         });
     }
 
-    /**
-     * 打开图片选择
-     */
-    protected void showPictureSelector(int image_count_max) {
-        IMAGE_COUNT_MAX = image_count_max;
+    private GridImageAdapter.onAddPicClickListener onAddPicClickListener = new GridImageAdapter.onAddPicClickListener() {
 
-        Intent intent = new Intent(getContext(), MultiImageSelectorActivity.class);
+        @SuppressLint("CheckResult")
+        @Override
+        public void onAddPicClick() {
+            //获取写的权限
+            RxPermissions rxPermission = new RxPermissions(getActivity());
+            rxPermission.requestEach(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    .subscribe(new Consumer<Permission>() {
+                        @Override
+                        public void accept(Permission permission) {
+                            if (permission.granted) {// 用户已经同意该权限
+                                //第一种方式，弹出选择和拍照的dialog
+                                showPop(false);
 
-        // 是否显示拍摄图片
-        intent.putExtra(MultiImageSelectorActivity.EXTRA_SHOW_CAMERA, true);
-
-        // 最大可选择图片数量
-        intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_COUNT, IMAGE_COUNT_MAX);
-
-        // 选择模式
-        intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_MODE, MultiImageSelectorActivity.MODE_MULTI);
-
-        // 默认选择
-        if (filePaths != null && filePaths.size() > 0) {
-            intent.putExtra(MultiImageSelectorActivity.EXTRA_DEFAULT_SELECTED_LIST, filePaths);
+                                //第二种方式，直接进入相册，但是 是有拍照得按钮的
+//                                showAlbum();
+                            } else {
+                                Toast.makeText(getContext(), "拒绝", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
         }
-        getActivity().startActivityForResult(intent, PHOTOS);
+
+        @Override
+        public void delete(List<LocalMedia> list) {
+            // 删除图片，重新加载
+            updateDeleteImages(list);
+        }
+    };
+
+
+    public void updateDeleteImages(List<LocalMedia> list) {
+
     }
 
-    protected void getPremission(int image_count_max) {
+    protected void getPremission() {
 
         if (ContextCompat.checkSelfPermission(getContext(),
                 Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -147,168 +164,68 @@ public class MainFragment extends Fragment {
                     new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
             //            }
         } else {
-            showPictureSelector(image_count_max);
+            showPop(true);
         }
 
     }
 
-    protected void initData() {
-        filePaths = new ArrayList<String>();
-        PHOTO_SIZE = (ScreenUtil.getScreenWidth(getContext()) - DensityUtil.dp2px(getContext(), 50)) / 5;
-        postPictureData = new ArrayList<Bitmap>();
-        bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.btn_image_add);
-        postPictureData.add(bitmap);
-
-        photoList = new ArrayList<File>();
-    }
-
-    /**
-     * 图片附件适配器
-     */
-    protected class GridViewAdapter extends BaseAdapter {
-
-        @Override
-        public int getCount() {
-
-            return postPictureData.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-
-            return postPictureData.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-
-            return position;
-        }
-
-        @SuppressWarnings("deprecation")
-        @Override
-        public View getView(final int position, View convertView, ViewGroup parent) {
-
-            GridViewAdapter.ViewHolder holder;
-            if (convertView == null) {
-                convertView = LayoutInflater.from(getContext()).inflate(
-                        R.layout.item_forum_picture, null);
-                holder = new GridViewAdapter.ViewHolder();
-                holder.imageView = (ImageView) convertView.findViewById(R.id.imageView);
-                holder.imageDelete = (ImageView) convertView.findViewById(R.id.imageDelete);
-                //holder.imageView.setLayoutParams(new FrameLayout.LayoutParams(PHOTO_SIZE, PHOTO_SIZE));
-                convertView.setTag(holder);
-            } else {
-                holder = (GridViewAdapter.ViewHolder) convertView.getTag();
-            }
-            try {
-                final Bitmap bitMap = postPictureData.get(position);
-                if (bitMap != null) {
-                    Log.d("stormxz", "bitmap != null ");
-                    holder.imageView.setBackgroundDrawable(new BitmapDrawable(bitMap));
-                } else {
-                    Log.d("stormxz", "bitmap == null ");
-                    holder.imageView.setBackgroundDrawable(
-                            getResources().getDrawable(R.drawable.image_default));
-                }
-
-                if (bitMap == bitmap) {
-                    holder.imageDelete.setVisibility(View.GONE);
-                } else {
-                    holder.imageDelete.setVisibility(View.VISIBLE);
-                }
-
-                //删除图标按钮
-                holder.imageDelete.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        postPictureData.remove(position);
-                        if (!postPictureData.contains(bitmap)) {
-                            postPictureData.add(bitmap);
-                        }
-                        filePaths.remove(position);
-                        notifyDataSetChanged();
-                    }
-                });
-            } catch (Exception e) {
-                Log.d("stormxz", e.getStackTrace() + "");
-            }
-            return convertView;
-        }
-
-        private class ViewHolder {
-
-            private ImageView imageView;
-            private ImageView imageDelete;
-        }
-
-    }
-
-
-    /**
-     * 刷新图片列表
-     */
-    protected void setImageList(final List<String> imageUris) {
-
-        if (imageUris != null) {
-            mThread = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        filePaths.clear();
-                        List<Bitmap> bitmaps = new ArrayList<Bitmap>();
-                        BitmapFactory.Options options = new BitmapFactory.Options();
-                        options.inPreferredConfig = Bitmap.Config.RGB_565;
-                        for (String path : imageUris) {
-                            long fileSize = FileUtil.getFileSize(new File(path));
-                            if (fileSize > 0.2 * 1048576) {
-                                options.inSampleSize = 1;
-                            }
-                            if (fileSize > 0.4 * 1048576) {
-                                options.inSampleSize = 2;
-                            }
-                            if (fileSize > 0.6 * 1048576) {
-                                options.inSampleSize = 4;
-                            }
-                            if (fileSize > 0.8 * 1048576) {
-                                options.inSampleSize = 6;
-                            }
-                            Log.i("cc", "setImageList : path = " + path);
-                            Bitmap bitmap = BitmapFactory.decodeFile(path, options);
-                            if (bitmap != null) {
-                                Bitmap zoomBitmap = ImageUtil.zoomBitmap(bitmap, PHOTO_SIZE, PHOTO_SIZE);
-                                bitmaps.add(zoomBitmap);
-                                bitmap.recycle();
-                                bitmap = null;
-                                filePaths.add(path);
-                            }
-                        }
-                        postPictureData.clear();
-                        postPictureData.addAll(bitmaps);
-                        if (bitmaps.size() < IMAGE_COUNT_MAX) {
-                            postPictureData.add(bitmap);
-                        }
-
-                        // 通知刷新附件列表
-                        mHandler.sendEmptyMessage(1);
-                    } catch (Exception e) {
-                        mHandler.sendEmptyMessage(1);
-                    }
-                }
-            });
-            mThread.start();
-        }
-    }
-
-    // Handler
-    private Handler mHandler = new Handler() {
-
-        public void handleMessage(Message msg) {
-            if (msg.what == 1) {
-                if (postPictureAdapter != null) {
-                    postPictureAdapter.notifyDataSetChanged();
+    protected void showPop(boolean isSelectLogo) {
+        //相册
+        Log.e("stormxz", " select = " + selectList.size());
+        int maxRealSelectNum = 2;
+        boolean needCrop = false;
+        if (!isSelectLogo) {
+            if (selectList != null) {
+                if (selectList.size() == 0) {
+                    maxRealSelectNum = 2;
+                } else if (selectList.size() == 1) {
+                    maxRealSelectNum = 1;
                 }
             }
+            needCrop = true;
+        } else {
+            maxRealSelectNum = 4;
+            needCrop = false;
         }
-    };
+
+        PictureSelector.create(getActivity())
+                .openGallery(PictureMimeType.ofImage())
+                .maxSelectNum(maxRealSelectNum)
+                .minSelectNum(1)
+                .imageSpanCount(4)
+                .enableCrop(needCrop)// 是否裁剪
+                .compress(true)// 是否压缩
+                //.sizeMultiplier(0.5f)// glide 加载图片大小 0~1之间 如设置 .glideOverride()无效
+                .glideOverride(160, 160)// glide 加载宽高，越小图片列表越流畅，但会影响列表图片浏览的清晰度
+                .withAspectRatio(1, 1)// 裁剪比例 如16:9 3:2 3:4 1:1 可自定义
+                .selectionMode(PictureConfig.MULTIPLE)
+                .forResult(PictureConfig.CHOOSE_REQUEST);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.e("stormxz", "onActivityResult 1111");
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.e("stormxz", "onActivityResult 2222");
+        List<LocalMedia> images;
+        if (resultCode == RESULT_OK && adapter != null) {
+            if (requestCode == PictureConfig.CHOOSE_REQUEST) {// 图片选择结果回调
+
+                images = PictureSelector.obtainMultipleResult(data);
+                selectList.addAll(images);
+
+                //selectList = PictureSelector.obtainMultipleResult(data);
+
+                // 例如 LocalMedia 里面返回三种path
+                // 1.media.getPath(); 为原图path
+                // 2.media.getCutPath();为裁剪后path，需判断media.isCut();是否为true
+                // 3.media.getCompressPath();为压缩后path，需判断media.isCompressed();是否为true
+                // 如果裁剪并压缩了，以取压缩路径为准，因为是先裁剪后压缩的
+
+
+                adapter.setList(selectList);
+                adapter.notifyDataSetChanged();
+            }
+        }
+    }
 }

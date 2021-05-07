@@ -36,6 +36,9 @@ import com.example.factoryrec.ui.ListLogoDialog;
 import com.example.factoryrec.ui.SpinnerEditDialog;
 import com.example.factoryrec.util.PdfCreator;
 import com.example.factoryrec.util.ProductItem;
+import com.luck.picture.lib.PictureSelector;
+import com.luck.picture.lib.config.PictureConfig;
+import com.luck.picture.lib.entity.LocalMedia;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -275,10 +278,11 @@ public class Fragment_Result extends MainFragment {
                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog1, int which) {
-                                Toast.makeText(getContext(), "正在保存...", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), "正在保存...按钮变蓝之前不要更改内容", Toast.LENGTH_SHORT).show();
                                 new Thread(new Runnable() {
                                     @Override
                                     public void run() {
+//                                        btnSubmit.setEnabled(false);
                                         if (mPDF.isChecked()) {
                                             PdfCreator pc = new PdfCreator(mActivity, Fragment_Result.this);
                                             pc.generatePdf(mShowLogo.isChecked(), mShowTitle.isChecked(), mShowFooter.isChecked(), mShowWatermark.isChecked());
@@ -405,9 +409,9 @@ public class Fragment_Result extends MainFragment {
             @Override
             public void onClick(View v) {
                 if (Build.VERSION.SDK_INT < 23) {
-                    showPictureSelector(4);
+                    showPop(true);
                 } else {
-                    getPremission(4);
+                    getPremission();
                 }
             }
         });
@@ -462,13 +466,19 @@ public class Fragment_Result extends MainFragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
             switch (requestCode) {
-                case PHOTOS:// 图片
+                case PictureConfig.CHOOSE_REQUEST:// 图片
                     if (data != null) {
-                        List<String> imageUris = data.getStringArrayListExtra(
-                                MultiImageSelectorActivity.EXTRA_RESULT);
-                        Log.e("cc", "onActivityResult imageUris: " + imageUris);
-                        if (imageUris.size() != 0) {
-                            mLogoUriList.addAll(imageUris);
+                        List<LocalMedia> images;
+                        images = PictureSelector.obtainMultipleResult(data);
+                        List<String> newImageUris = new ArrayList<String>();
+                        if (images != null) {
+                            for (int i = 0; i < images.size(); i++) {
+                                newImageUris.add(images.get(i).getCompressPath());
+                            }
+                        }
+                        Log.e("cc", "onActivityResult imageUris: " + newImageUris);
+                        if (newImageUris.size() != 0) {
+                            mLogoUriList.addAll(newImageUris);
                         }
                         mLogo_Uri_Edit.putString("uri", list2String(mLogoUriList).toString());
                         mLogo_Uri_Edit.commit();
@@ -478,4 +488,13 @@ public class Fragment_Result extends MainFragment {
             }
         }
     }
+
+//    public void setEnable() {
+//        mActivity.runOnUiThread(new Runnable() {
+//          @Override
+//            public void run() {
+//              btnSubmit.setEnabled(true);
+//          }
+//        });
+//    }
 }

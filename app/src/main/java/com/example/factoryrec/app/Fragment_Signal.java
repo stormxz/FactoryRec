@@ -17,10 +17,14 @@ import android.widget.EditText;
 import com.example.factoryrec.R;
 import com.example.factoryrec.selector.MultiImageSelectorActivity;
 import com.example.factoryrec.util.FileUtil;
+import com.luck.picture.lib.config.PictureConfig;
+import com.luck.picture.lib.entity.LocalMedia;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.app.Activity.RESULT_OK;
 
 
 public class Fragment_Signal extends MainFragment {
@@ -34,9 +38,8 @@ public class Fragment_Signal extends MainFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_menu_signal, container, false);
-        gViewPostPicture = view.findViewById(R.id.gViewPostPicture_signal);
         mSignalEditText = view.findViewById(R.id.signal_et);
-
+        mRecyclerView = view.findViewById(R.id.recycler_single);
         mSignalEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -57,38 +60,31 @@ public class Fragment_Signal extends MainFragment {
         return view;
     }
 
-
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK) {
-            switch (requestCode) {
-                case PHOTOS:// 图片
-                    if (data != null) {
-                        List<String> imageUris = data.getStringArrayListExtra(
-                                MultiImageSelectorActivity.EXTRA_RESULT);
-                        Log.e("stormxz", "onActivityResult imageUris: " + imageUris);
-                        List<String> newImageUris = new ArrayList<String>();
+        if (resultCode == RESULT_OK) {
+            if (requestCode == PictureConfig.CHOOSE_REQUEST) {// 图片选择结果回调
 
-                        // 过滤超过图片限制的图片
-                        if (imageUris != null) {
-                            photoList.clear();
-                            for (String file : imageUris) {
-                                long fileSize = FileUtil.getFileSize(new File(file));
-                                if (fileSize < MAX_PHOTO_SIZE) {
-                                    newImageUris.add(file);
-                                    mItem.setSignal_BadPic(newImageUris);
-                                    photoList.add(new File(file));
-                                }
-                            }
-                        }
-                        // 刷新图片列表
-                        Log.e("stormxz", "onActivityResult newImageUris: " + newImageUris);
-                        setImageList(newImageUris);
+                List<String> newImageUris = new ArrayList<String>();
+                if (selectList != null) {
+                    for (int i = 0; i < selectList.size(); i++) {
+                        newImageUris.add(selectList.get(i).getCompressPath());
                     }
-                    break;
+                    mItem.setSignal_BadPic(newImageUris);
+                }
             }
+        }
+    }
+
+    public void updateDeleteImages(List<LocalMedia> list) {
+
+        List<String> newImageUris = new ArrayList<String>();
+        if (list != null) {
+            for (int i = 0; i < list.size(); i++) {
+                newImageUris.add(list.get(i).getCompressPath());
+            }
+            mItem.setSignal_BadPic(newImageUris);
         }
     }
 

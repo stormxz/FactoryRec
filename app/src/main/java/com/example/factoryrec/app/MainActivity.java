@@ -23,9 +23,6 @@ import com.example.factoryrec.util.VocConstant;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.factoryrec.app.Fragment_Display.PHOTOS;
-
-
 public class MainActivity extends FragmentActivity implements View.OnClickListener {
 
     private static final String TAG = "MainActivity";
