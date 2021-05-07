@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#ffffff">
+    android:background="#ffffff"
+    android:orientation="vertical">
 
     <TextView
         android:layout_width="wrap_content"
@@ -12,67 +12,171 @@
         android:layout_marginTop="@dimen/result_title_top"
         android:text="@string/page_result"
         android:textColor="@android:color/black"
-        android:textStyle="bold"
-        android:textSize="25sp"/>
+        android:textSize="25sp"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/result_et"
-        android:background="@drawable/bg_edittext"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:layout_marginTop="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
         android:layout_marginLeft="@dimen/result_title_left"
+        android:layout_marginTop="30dp"
         android:layout_marginRight="@dimen/result_title_left"
         android:layout_marginBottom="30dp"
-        android:textColor="@android:color/black"
+        android:background="@drawable/bg_edittext"
+        android:hint="请输入结论..."
         android:inputType="textMultiLine"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:hint="请输入结论..."/>
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:textColor="@android:color/black" />
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:background="@color/line_light"
-        android:layout_marginLeft="@dimen/distance_to_screen"
-        android:layout_marginRight="@dimen/distance_to_screen" />
-
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/distance_to_screen"
         android:layout_marginRight="@dimen/distance_to_screen"
-        android:layout_marginTop="@dimen/size_40dp"
+        android:background="@color/line_light" />
+
+    <CheckBox
         android:id="@+id/addexcel"
-        android:text="EXCEL"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/distance_to_screen"
+        android:layout_marginTop="@dimen/size_20dp"
+        android:layout_marginRight="@dimen/distance_to_screen"
+        android:text="EXCEL" />
 
     <CheckBox
+        android:id="@+id/addpdf"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/distance_to_screen"
         android:layout_marginRight="@dimen/distance_to_screen"
-        android:id="@+id/addpdf"
-        android:text="PDF"/>
+        android:text="PDF" />
 
     <CheckBox
+        android:id="@+id/showlogo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/distance_to_screen_logo"
         android:layout_marginRight="@dimen/distance_to_screen"
-        android:id="@+id/showlogo"
-        android:visibility="gone"
-        android:text="是否添加logo"/>
+        android:text="Logo"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/image_select_logo"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="10dp"
+        android:clickable="true"
+        android:src="@mipmap/ic_select_logo"
+        android:visibility="gone" />
+
+    <CheckBox
+        android:id="@+id/show_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/distance_to_screen_logo"
+        android:layout_marginRight="@dimen/distance_to_screen"
+        android:text="标题"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/title_edit_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/distance_to_screen_logo"
+            android:text="标题" />
+
+        <TextView
+            android:id="@+id/title_spinner"
+            android:layout_width="223dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/edit_state"
+            android:drawableRight="@mipmap/spinner_down_arrow"
+            android:gravity="center_vertical"
+            android:textColor="@color/disable_light"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/edit_image_title"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="20dp"
+            android:src="@mipmap/ic_edit" />
+    </LinearLayout>
+
+    <CheckBox
+        android:id="@+id/show_footer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/distance_to_screen_logo"
+        android:layout_marginRight="@dimen/distance_to_screen"
+        android:text="页脚"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/footer_edit_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/distance_to_screen_logo"
+            android:text="页脚" />
+
+        <TextView
+            android:id="@+id/footer_spinner"
+            android:layout_width="223dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/edit_state"
+            android:drawableRight="@mipmap/spinner_down_arrow"
+            android:gravity="center_vertical"
+            android:textColor="@color/disable_light"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/edit_image_footer"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="20dp"
+            android:src="@mipmap/ic_edit" />
+    </LinearLayout>
+
+    <CheckBox
+        android:id="@+id/show_watermark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/distance_to_screen_logo"
+        android:layout_marginRight="@dimen/distance_to_screen"
+        android:text="水印"
+        android:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/btnSubmit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/result_title_left"
+        android:layout_marginTop="@dimen/size_20dp"
         android:layout_marginRight="@dimen/result_title_left"
-        android:layout_marginBottom="@dimen/size_20dp"
-        android:layout_marginTop="@dimen/size_40dp">
+        android:layout_marginBottom="@dimen/size_20dp">
 
-        <include layout="@layout/button_layout_next"/>
+        <include layout="@layout/button_layout_next" />
     </LinearLayout>
+
 
 </LinearLayout>

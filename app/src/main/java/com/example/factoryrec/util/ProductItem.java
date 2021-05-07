@@ -1,10 +1,12 @@
 package com.example.factoryrec.util;
 
+import java.lang.ref.SoftReference;
 import java.util.List;
 
 public class ProductItem {
 
     private static ProductItem mItem;
+    private static SoftReference<ProductItem> sr;
 
     private String mCustomer;           //客户
     private String mMachineType;        //机种
@@ -18,6 +20,9 @@ public class ProductItem {
     private String mDisplayText;        //外观确认信息
     private String mOMText;             //OM确认信息
     private String mSignalText;         //讯号量测确认信息
+    private String mTitle;              //标题
+    private String mFooter;             //页脚/水印
+    private String mLogo_Pic;           //Logo图片
     private String mConclusion;         //结论
 
     private List<String> mHome_BadPic;        //主页不良图片
@@ -27,7 +32,8 @@ public class ProductItem {
 
     public static synchronized ProductItem getInstance() {
         if (mItem == null) {
-            mItem = new ProductItem();
+            sr = new SoftReference(new ProductItem());
+            mItem = sr.get();
         }
         return mItem;
     }
@@ -124,6 +130,22 @@ public class ProductItem {
         return mSignalText;
     }
 
+    public void setTitle(String mTitle) {
+        this.mTitle = mTitle;
+    }
+
+    public String getTitle() {
+        return mTitle;
+    }
+
+    public void setFooter(String mFooter) {
+        this.mFooter = mFooter;
+    }
+
+    public String getFooter() {
+        return mFooter;
+    }
+
     public void setSignalText(String mSignalText) {
         this.mSignalText = mSignalText;
     }
@@ -166,6 +188,14 @@ public class ProductItem {
 
     public void setSignal_BadPic(List<String> signal_badPic) {
         this.mSignal_BadPic = signal_badPic;
+    }
+
+    public String getLogo_Pic() {
+        return mLogo_Pic;
+    }
+
+    public void setLogo_Pic(String logo_pic) {
+        this.mLogo_Pic = logo_pic;
     }
 
 }
