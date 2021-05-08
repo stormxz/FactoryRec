@@ -25,7 +25,8 @@ public class PdfCreator {
     private MainActivity mActivity;
     private ProductItem mItem;
     private boolean mShowLogo, mShowTitle, mShowFooter, mShowWatermark;
-    private int mScreenWidth, mScreenHeight;
+    private final int mScreenWidth = 720;
+    private final int mScreenHeight = 1479;
 
     private int mBitmapWidth = 70;
     private int mBitmapHeight = 70;
@@ -36,8 +37,9 @@ public class PdfCreator {
     public PdfCreator(MainActivity activity, Fragment_Result result) {
         mActivity = activity;
         mItem = result.getItem();
-        mScreenWidth = mActivity.getWindowManager().getDefaultDisplay().getWidth();
-        mScreenHeight = mActivity.getWindowManager().getDefaultDisplay().getHeight();
+//        mScreenWidth = mActivity.getWindowManager().getDefaultDisplay().getWidth();
+//        mScreenHeight = mActivity.getWindowManager().getDefaultDisplay().getHeight();
+//        Log.i("cc", "mScreenWidth = " + mScreenWidth + ", mScreenHeight = " + mScreenHeight);
     }
 
     public void generatePdf(boolean showLogo, boolean showTitle, boolean showFooter, boolean showWatermark) {
@@ -53,8 +55,9 @@ public class PdfCreator {
         drawPdf(page.getCanvas());
         document.finishPage(page);
 
-        String pdfName = mItem.getCustomer() + "+" + mItem.getMachineType() + "+" + mItem.getBadPhenom2() + ".pdf";
+        String pdfName = mItem.getCustomer() + " " + mItem.getMachineType() + " " + mItem.getBadPhenom2() + "不良解析报告.pdf";
         String path = mActivity.getApplicationContext().getExternalFilesDir(null) + "/" + pdfName;
+//        String path = mActivity.getApplicationContext().getExternalFilesDir(null) + "/table1.pdf";
         Log.i("cc", "path = " + path);
         System.out.println(path);
         File file = new File(path);
@@ -78,7 +81,7 @@ public class PdfCreator {
     private void drawBitmap(Canvas canvas, Paint paint, Rect dst, BitmapFactory.Options options, String pathName) {
         WeakReference<Bitmap> wfb = new WeakReference<>(BitmapFactory.decodeFile(pathName, options));
         Bitmap bitmap = wfb.get();
-        scaleAndDrawBitmap(canvas, paint, dst, bitmap, 0.1);
+        scaleAndDrawBitmap(canvas, paint, dst, bitmap, 0.3);
         bitmap.recycle();
         wfb.clear();
     }
@@ -104,6 +107,7 @@ public class PdfCreator {
         drawLogoAndroidTitle(canvas, paint, options);
         drawHomeText(canvas, paint);
         drawBadPic(canvas, paint, options);
+        drawWatermark(canvas, paint, mItem.getFooter());
     }
 
     private void drawHomeBackground(Canvas canvas, Paint paint, BitmapFactory.Options options) {
@@ -191,6 +195,19 @@ public class PdfCreator {
                 Rect dst = new Rect(x + (picWidth + 30) * i, y, x + (picWidth + 30) * i + picWidth, y + picHeight);
                 drawBitmap(canvas, paint, dst, options, (String)list.get(i));
             }
+        }
+    }
+
+    private void drawWatermark(Canvas canvas, Paint paint, String text) {
+        if (mShowWatermark && text != null) {
+            paint.setARGB(0x20, 0, 0, 0);//设置水印颜色
+            paint.setTextSize(30);//设置水印字体大小
+            paint.setAntiAlias(true); // 抗锯齿
+            canvas.rotate(-20);
+            canvas.drawText(text, 0, 470, paint);
+            canvas.drawText(text, 0, 960, paint);
+            canvas.rotate(0);
+            paint.setTextSize(16);
         }
     }
 

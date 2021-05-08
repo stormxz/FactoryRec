@@ -278,7 +278,7 @@ public class Fragment_Result extends MainFragment {
                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog1, int which) {
-                                Toast.makeText(getContext(), "正在保存...按钮变蓝之前不要更改内容", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), "正在保存...", Toast.LENGTH_SHORT).show();
                                 new Thread(new Runnable() {
                                     @Override
                                     public void run() {
