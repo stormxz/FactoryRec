@@ -259,7 +259,12 @@ public class ExcelCreator {
         // 调整单元格格式
         try {
             for (int i = 0; i < 21; i++) {
-                excelCreator.fillContent(i, 99, "                 ", contextFormat);
+                if (i == 9 || i == 10 || i == 12 || i == 13 || i == 15 || i== 16 || i == 18 || i == 19) {
+                    excelCreator.fillContent(i, 99, "                              ", contextFormat);
+                } else {
+                    excelCreator.fillContent(i, 99, "                 ", contextFormat);
+                }
+
             }
             // 调整图片
             excelCreator.fillContent(25, 0, "  \n  \n ", contextFormat);
@@ -272,7 +277,7 @@ public class ExcelCreator {
 
     private void adjustCellHeight(ZzExcelCreator excelCreator, WritableCellFormat contextFormat, int row) {
         try {
-            excelCreator.fillContent(25, row, "  \n  \n  \n  \n \n \n", contextFormat);
+            excelCreator.fillContent(25, row, "  \n  \n  \n  \n \n \n \n", contextFormat);
         } catch (WriteException e) {
             e.printStackTrace();
         }
@@ -295,15 +300,15 @@ public class ExcelCreator {
         options.inSampleSize = 1;
         WeakReference<Bitmap> wfb = new WeakReference<>(BitmapFactory.decodeFile(pathName, options));
         Bitmap bitmap = wfb.get();
-        int bitmapW = (int) (bitmap.getWidth() * 0.7);
-        int bitmapH = (int) (bitmap.getHeight() * 0.7);
+        int bitmapW = (int) (bitmap.getWidth() * 0.9);
+        int bitmapH = (int) (bitmap.getHeight() * 0.9);
         WeakReference<Bitmap> nwfb = new WeakReference<>(Bitmap.createScaledBitmap(bitmap, bitmapW, bitmapH, false));
         Bitmap newBM = nwfb.get();
         bitmap.recycle();
         wfb.clear();
         nwfb.clear();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        newBM.compress(Bitmap.CompressFormat.JPEG, 80, baos);
+        newBM.compress(Bitmap.CompressFormat.JPEG, 50, baos);
         newBM.recycle();
         return baos.toByteArray();
     }
