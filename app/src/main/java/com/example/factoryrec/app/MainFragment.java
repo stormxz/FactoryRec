@@ -197,7 +197,7 @@ public class MainFragment extends Fragment {
                 .compress(true)// 是否压缩
                 //.sizeMultiplier(0.5f)// glide 加载图片大小 0~1之间 如设置 .glideOverride()无效
                 .glideOverride(160, 160)// glide 加载宽高，越小图片列表越流畅，但会影响列表图片浏览的清晰度
-                .withAspectRatio(1, 1)// 裁剪比例 如16:9 3:2 3:4 1:1 可自定义
+                .withAspectRatio(4, 3)// 裁剪比例 如16:9 3:2 3:4 1:1 可自定义
                 .selectionMode(PictureConfig.MULTIPLE)
                 .forResult(PictureConfig.CHOOSE_REQUEST);
     }
