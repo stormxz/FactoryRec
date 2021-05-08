@@ -55,9 +55,9 @@ public class PdfCreator {
         drawPdf(page.getCanvas());
         document.finishPage(page);
 
-        String pdfName = mItem.getCustomer() + " " + mItem.getMachineType() + " " + mItem.getBadPhenom2() + "不良解析报告.pdf";
-        String path = mActivity.getApplicationContext().getExternalFilesDir(null) + "/" + pdfName;
-//        String path = mActivity.getApplicationContext().getExternalFilesDir(null) + "/table1.pdf";
+//        String pdfName = mItem.getCustomer() + " " + mItem.getMachineType() + " " + mItem.getBadPhenom2() + "不良解析报告.pdf";
+//        String path = mActivity.getApplicationContext().getExternalFilesDir(null) + "/" + pdfName;
+        String path = mActivity.getApplicationContext().getExternalFilesDir(null) + "/table1.pdf";
         Log.i("cc", "path = " + path);
         System.out.println(path);
         File file = new File(path);
@@ -113,49 +113,50 @@ public class PdfCreator {
     private void drawHomeBackground(Canvas canvas, Paint paint, BitmapFactory.Options options) {
         WeakReference<Bitmap> wfb = new WeakReference<>(BitmapFactory.decodeResource(mActivity.getResources(), R.drawable.pdf_background, options));
         Bitmap bitmap = wfb.get();
-//        Log.i("cc", "bitmap.width = " + bitmap.getWidth() + ", bitmap.height = " + bitmap.getHeight());
-        Rect dst = new Rect(0, 0, mScreenWidth, mScreenWidth  * bitmap.getHeight() / bitmap.getWidth());
-//        Log.i("cc", "mScreenWidth = " + mScreenWidth + ", mScreenWidth  * bitmap.getHeight() / bitmap.getWidth() = " + mScreenWidth  * bitmap.getHeight() / bitmap.getWidth());
+        Log.i("cc", "bitmap.width = " + bitmap.getWidth() + ", bitmap.height = " + bitmap.getHeight());
+        Rect dst = new Rect(80, 80, mScreenWidth - 80, (mScreenWidth - 160)  * bitmap.getHeight() / bitmap.getWidth() + 80);
+        Log.i("cc", "mScreenWidth = " + mScreenWidth + ", bottom = " + (mScreenWidth - 160)  * bitmap.getHeight() / bitmap.getWidth());
         canvas.drawBitmap(bitmap, null, dst, paint);
         wfb.clear();
         bitmap.recycle();
     }
 
     private void drawLogoAndroidTitle(Canvas canvas, Paint paint, BitmapFactory.Options options) {
-        int x = 10;
+        int x = 60;
+        int y = 85;
         int logoWidth = 0;
         boolean logoDrawed = false;
         if (mShowLogo && mItem.getLogo_Pic() != null) {
             WeakReference<Bitmap> wfb = new WeakReference<>(BitmapFactory.decodeFile(mItem.getLogo_Pic(), options));
             Bitmap bitmap = wfb.get();
             logoWidth = 40 * bitmap.getWidth() / bitmap.getHeight();
-            Rect dst = new Rect(x, x, x + logoWidth, x + 40);
+            Rect dst = new Rect(x, y, x + logoWidth, y + 40);
             scaleAndDrawBitmap(canvas, paint, dst, bitmap, 0.3);
             logoDrawed = true;
         }
         if (mShowTitle && mItem.getTitle() != null) {
             paint.setTextSize(25);
             paint.setFakeBoldText(true);
-            canvas.drawText(mItem.getTitle(), x + (logoDrawed ? logoWidth : 0) + 25, x + 27, paint);
+            canvas.drawText(mItem.getTitle(), x + (logoDrawed ? logoWidth : 0) + 25, y + 27, paint);
             paint.setTextSize(16);
             paint.setFakeBoldText(false);
         }
     }
 
     private void drawHomeText(Canvas canvas, Paint paint) {
-        drawText(mItem.getCustomer(), 170, 75, canvas, paint);                    //客户
-        drawText(mItem.getSN(),170, 106, canvas, paint);                          //sn
-        drawText(mItem.getBadPhenom(), 170, 137, canvas, paint);                  //不良大类
-        drawText(mItem.getOccDate(), 170, 168, canvas, paint);                    //发生时间
-        drawText(mItem.getMachineType(), 560, 75, canvas, paint);                 //机种
-        drawText(mItem.getOccSite(), 560, 106, canvas, paint);                    //发生站点
-        drawText(mItem.getBadPhenom2(), 560, 137, canvas, paint);                 //不良现象
-        drawText(mItem.getBadPosition(), 560, 168, canvas, paint);                //不良位置
-        drawText(mItem.getDisplayText(), 88, 628, canvas, paint);                 //外观确认
-        drawText(mItem.getOMText(), 88, 854, canvas, paint);                      //OM检查
-        drawText(mItem.getSignalText(), 88, 1083, canvas, paint);                 //讯号量测确认
-        drawText(mItem.getConclusion(), 36, 1143, canvas, paint);                 //结论
-        drawText(mItem.getFooter(), 580, 1200, canvas, paint);                    //页脚
+        drawText(mItem.getCustomer(), 210, 138, canvas, paint);                   //客户
+        drawText(mItem.getSN(),210, 163, canvas, paint);                          //sn
+        drawText(mItem.getBadPhenom(), 210, 188, canvas, paint);                  //不良大类
+        drawText(mItem.getOccDate(), 210, 213, canvas, paint);                    //发生时间
+        drawText(mItem.getMachineType(), 515, 138, canvas, paint);                //机种
+        drawText(mItem.getOccSite(), 515, 163, canvas, paint);                    //发生站点
+        drawText(mItem.getBadPhenom2(), 515, 188, canvas, paint);                 //不良现象
+        drawText(mItem.getBadPosition(), 515, 213, canvas, paint);                //不良位置
+        drawText(mItem.getDisplayText(), 150, 569, canvas, paint);                //外观确认
+        drawText(mItem.getOMText(), 150, 745, canvas, paint);                     //OM检查
+        drawText(mItem.getSignalText(), 150, 924, canvas, paint);                 //讯号量测确认
+        drawText(mItem.getConclusion(), 110, 970, canvas, paint);                 //结论
+        drawText(mItem.getFooter(), 580, 1030, canvas, paint);                    //页脚
     }
 
     private void drawText(String str, int x, int y, Canvas canvas, Paint paint) {
@@ -172,28 +173,33 @@ public class PdfCreator {
     }
 
     private void drawBadPic(Canvas canvas, Paint paint, BitmapFactory.Options options) {
-        int x = 90;
-        int badPicWidth = 230;
-        int badPicHeight = 160;
+        int x = 140;
+        int badPicWidth = 205;
+        int badPicHeight = 125;
         //首页不良图片
         ArrayList homeBitmapList = (ArrayList) mItem.getHome_BadPic();
-        drawBadPic(canvas, paint, options, homeBitmapList, x, 215, badPicWidth, badPicHeight);
+        drawBadPic(canvas, paint, options, homeBitmapList, x, 247, badPicWidth, badPicHeight);
         //外观不良图片
         ArrayList displayBitmapList = (ArrayList) mItem.getDisplay_BadPic();
-        drawBadPic(canvas, paint, options, displayBitmapList, x, 443, badPicWidth, badPicHeight);
+        drawBadPic(canvas, paint, options, displayBitmapList, x, 425, badPicWidth, badPicHeight);
         //OM不良图片
         ArrayList OMBitmapList = (ArrayList) mItem.getOM_BadPic();
-        drawBadPic(canvas, paint, options, OMBitmapList, x, 668, badPicWidth, badPicHeight);
+        drawBadPic(canvas, paint, options, OMBitmapList, x, 600, badPicWidth, badPicHeight);
         //讯号量测不良图片
         ArrayList signalBitmapList = (ArrayList) mItem.getSignal_BadPic();
-        drawBadPic(canvas, paint, options, signalBitmapList, x, 898, badPicWidth, badPicHeight);
+        drawBadPic(canvas, paint, options, signalBitmapList, x, 779, badPicWidth, badPicHeight);
     }
 
     private void drawBadPic(Canvas canvas, Paint paint, BitmapFactory.Options options, List list, int x, int y, int picWidth, int picHeight) {
         if (list != null && list.size() != 0) {
-            for (int i = 0; i < list.size(); i++) {
-                Rect dst = new Rect(x + (picWidth + 30) * i, y, x + (picWidth + 30) * i + picWidth, y + picHeight);
-                drawBitmap(canvas, paint, dst, options, (String)list.get(i));
+            if (list.size() == 1) {
+                Rect dst = new Rect(255, y, 255 + picWidth, y + picHeight);
+                drawBitmap(canvas, paint, dst, options, (String)list.get(0));
+            } else {
+                for (int i = 0; i < list.size(); i++) {
+                    Rect dst = new Rect(x + (picWidth + 30) * i, y, x + (picWidth + 30) * i + picWidth, y + picHeight);
+                    drawBitmap(canvas, paint, dst, options, (String)list.get(i));
+                }
             }
         }
     }
@@ -205,7 +211,7 @@ public class PdfCreator {
             paint.setAntiAlias(true); // 抗锯齿
             canvas.rotate(-20);
             canvas.drawText(text, 0, 470, paint);
-            canvas.drawText(text, 0, 960, paint);
+            canvas.drawText(text, 0, 860, paint);
             canvas.rotate(0);
             paint.setTextSize(16);
         }
