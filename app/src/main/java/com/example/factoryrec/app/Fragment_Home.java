@@ -89,7 +89,7 @@ public class Fragment_Home extends MainFragment implements View.OnClickListener 
 
     private Resources res;
     private static final String REGULAR_EXPRESSION = "#";
-    private String[] mCustoms_Array = {"张三", "李四", "王二", "盖伦", "德莱厄斯", "德莱厄斯", "德莱厄斯", "德莱厄斯", "德莱厄斯"};
+    private String[] mCustoms_Array;
     private String[] mMachine_Array, mSite_Array, mPosition_Array;
     private String[] mPhenom_Array, mPhenom_Array2_CP, mPhenom_Array2_CM, mPhenom_Array2_CF, mPhenom_Array2_CD, mPhenom_Array2_CA, mPhenom_Array2_CN;
     private String mFirstMenuName;

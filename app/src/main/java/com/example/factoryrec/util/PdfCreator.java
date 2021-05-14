@@ -26,7 +26,7 @@ public class PdfCreator {
     private ProductItem mItem;
     private boolean mShowLogo, mShowTitle, mShowFooter, mShowWatermark;
     private final int mScreenWidth = 720;
-    private final int mScreenHeight = 1479;
+    private final int mScreenHeight = 1480;
 
     private int mBitmapWidth = 70;
     private int mBitmapHeight = 70;
@@ -55,9 +55,9 @@ public class PdfCreator {
         drawPdf(page.getCanvas());
         document.finishPage(page);
 
-//        String pdfName = mItem.getCustomer() + " " + mItem.getMachineType() + " " + mItem.getBadPhenom2() + "不良解析报告.pdf";
-//        String path = mActivity.getApplicationContext().getExternalFilesDir(null) + "/" + pdfName;
-        String path = mActivity.getApplicationContext().getExternalFilesDir(null) + "/table1.pdf";
+        String pdfName = mItem.getCustomer() + " " + mItem.getMachineType() + " " + mItem.getBadPhenom2() + "不良解析报告.pdf";
+        String path = mActivity.getApplicationContext().getExternalFilesDir(null) + "/" + pdfName;
+//        String path = mActivity.getApplicationContext().getExternalFilesDir(null) + "/table1.pdf";
         Log.i("cc", "path = " + path);
         System.out.println(path);
         File file = new File(path);
@@ -98,20 +98,23 @@ public class PdfCreator {
 
     private void drawPdf(Canvas canvas) {
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paint.setTextSize(16);
+        Typeface typeface = Typeface.create("微软雅黑", Typeface.NORMAL);
+        paint.setTypeface(typeface);
+        paint.setAntiAlias(true); // 抗锯齿
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inPreferredConfig = Bitmap.Config.RGB_565;
 
         //绘制home背景格式
         drawHomeBackground(canvas, paint, options);
         drawLogoAndroidTitle(canvas, paint, options);
+        drawListText(canvas, paint);
         drawHomeText(canvas, paint);
         drawBadPic(canvas, paint, options);
         drawWatermark(canvas, paint, mItem.getFooter());
     }
 
     private void drawHomeBackground(Canvas canvas, Paint paint, BitmapFactory.Options options) {
-        WeakReference<Bitmap> wfb = new WeakReference<>(BitmapFactory.decodeResource(mActivity.getResources(), R.drawable.pdf_background, options));
+        WeakReference<Bitmap> wfb = new WeakReference<>(BitmapFactory.decodeResource(mActivity.getResources(), R.drawable.bg1, options));
         Bitmap bitmap = wfb.get();
         Log.i("cc", "bitmap.width = " + bitmap.getWidth() + ", bitmap.height = " + bitmap.getHeight());
         Rect dst = new Rect(80, 80, mScreenWidth - 80, (mScreenWidth - 160)  * bitmap.getHeight() / bitmap.getWidth() + 80);
@@ -122,15 +125,15 @@ public class PdfCreator {
     }
 
     private void drawLogoAndroidTitle(Canvas canvas, Paint paint, BitmapFactory.Options options) {
-        int x = 60;
-        int y = 85;
+        int x = 100;
+        int y = 84;
         int logoWidth = 0;
         boolean logoDrawed = false;
         if (mShowLogo && mItem.getLogo_Pic() != null) {
             WeakReference<Bitmap> wfb = new WeakReference<>(BitmapFactory.decodeFile(mItem.getLogo_Pic(), options));
             Bitmap bitmap = wfb.get();
-            logoWidth = 40 * bitmap.getWidth() / bitmap.getHeight();
-            Rect dst = new Rect(x, y, x + logoWidth, y + 40);
+            logoWidth = 35 * bitmap.getWidth() / bitmap.getHeight();
+            Rect dst = new Rect(x, y, x + logoWidth, y + 35);
             scaleAndDrawBitmap(canvas, paint, dst, bitmap, 0.3);
             logoDrawed = true;
         }
@@ -138,25 +141,49 @@ public class PdfCreator {
             paint.setTextSize(25);
             paint.setFakeBoldText(true);
             canvas.drawText(mItem.getTitle(), x + (logoDrawed ? logoWidth : 0) + 25, y + 27, paint);
-            paint.setTextSize(16);
+            paint.setTextSize(10);
             paint.setFakeBoldText(false);
         }
     }
 
+    private void drawListText(Canvas canvas, Paint paint) {
+        paint.setTextSize(17f);
+        paint.setFakeBoldText(true);
+        drawText("客户", 120, 140, canvas, paint);
+        drawText("SN", 125, 163, canvas, paint);
+        drawText("不良大类", 105, 188, canvas, paint);
+        drawText("发生时间", 105, 212, canvas, paint);
+        drawText("机种", 425, 140, canvas, paint);
+        drawText("发生站点", 410, 163, canvas, paint);
+        drawText("不良现象", 410, 188, canvas, paint);
+        drawText("不良位置", 410, 212, canvas, paint);
+        drawText("Phenomenal Description", 103, 237, canvas, paint);
+        drawText("Failure Analysis", 103, 394, canvas, paint);
+        drawText("Root cause", 103, 983, canvas, paint);
+        paint.setTextSize(15.5f);
+        drawText("1.外观确认", 111, 419, canvas, paint);
+        drawText("2.OM确认", 111, 600, canvas, paint);
+        drawText("3.讯号量测确认", 111, 781, canvas, paint);
+        paint.setTextSize(14.2f);
+        paint.setFakeBoldText(false);
+    }
+
     private void drawHomeText(Canvas canvas, Paint paint) {
         drawText(mItem.getCustomer(), 210, 138, canvas, paint);                   //客户
-        drawText(mItem.getSN(),210, 163, canvas, paint);                          //sn
-        drawText(mItem.getBadPhenom(), 210, 188, canvas, paint);                  //不良大类
-        drawText(mItem.getOccDate(), 210, 213, canvas, paint);                    //发生时间
+        drawText(mItem.getSN(), 210, 163, canvas, paint);                          //sn
+        drawText(mItem.getBadPhenom(), 210, 187, canvas, paint);                  //不良大类
+        drawText(mItem.getOccDate(), 210, 211, canvas, paint);                    //发生时间
         drawText(mItem.getMachineType(), 515, 138, canvas, paint);                //机种
         drawText(mItem.getOccSite(), 515, 163, canvas, paint);                    //发生站点
-        drawText(mItem.getBadPhenom2(), 515, 188, canvas, paint);                 //不良现象
-        drawText(mItem.getBadPosition(), 515, 213, canvas, paint);                //不良位置
-        drawText(mItem.getDisplayText(), 150, 569, canvas, paint);                //外观确认
-        drawText(mItem.getOMText(), 150, 745, canvas, paint);                     //OM检查
-        drawText(mItem.getSignalText(), 150, 924, canvas, paint);                 //讯号量测确认
-        drawText(mItem.getConclusion(), 110, 970, canvas, paint);                 //结论
-        drawText(mItem.getFooter(), 580, 1030, canvas, paint);                    //页脚
+        drawText(mItem.getBadPhenom2(), 515, 187, canvas, paint);                 //不良现象
+        drawText(mItem.getBadPosition(), 515, 211, canvas, paint);                //不良位置
+        drawText("小结：" + mItem.getDisplayText(), 111, 575, canvas, paint);                //外观确认
+        drawText("小结：" + mItem.getOMText(), 111, 756, canvas, paint);                     //OM检查
+        drawText("小结：" + mItem.getSignalText(), 111, 958, canvas, paint);                 //讯号量测确认
+        drawText(mItem.getConclusion(), 110, 1007, canvas, paint);                    //结论
+        if (mShowFooter) {
+            drawText(mItem.getFooter(), 580, 1060, canvas, paint);                    //页脚
+        }
     }
 
     private void drawText(String str, int x, int y, Canvas canvas, Paint paint) {
@@ -181,13 +208,13 @@ public class PdfCreator {
         drawBadPic(canvas, paint, options, homeBitmapList, x, 247, badPicWidth, badPicHeight);
         //外观不良图片
         ArrayList displayBitmapList = (ArrayList) mItem.getDisplay_BadPic();
-        drawBadPic(canvas, paint, options, displayBitmapList, x, 425, badPicWidth, badPicHeight);
+        drawBadPic(canvas, paint, options, displayBitmapList, x, 430, badPicWidth, badPicHeight);
         //OM不良图片
         ArrayList OMBitmapList = (ArrayList) mItem.getOM_BadPic();
-        drawBadPic(canvas, paint, options, OMBitmapList, x, 600, badPicWidth, badPicHeight);
+        drawBadPic(canvas, paint, options, OMBitmapList, x, 610, badPicWidth, badPicHeight);
         //讯号量测不良图片
         ArrayList signalBitmapList = (ArrayList) mItem.getSignal_BadPic();
-        drawBadPic(canvas, paint, options, signalBitmapList, x, 779, badPicWidth, badPicHeight);
+        drawBadPic(canvas, paint, options, signalBitmapList, x, 800, badPicWidth, badPicHeight);
     }
 
     private void drawBadPic(Canvas canvas, Paint paint, BitmapFactory.Options options, List list, int x, int y, int picWidth, int picHeight) {
@@ -207,13 +234,12 @@ public class PdfCreator {
     private void drawWatermark(Canvas canvas, Paint paint, String text) {
         if (mShowWatermark && text != null) {
             paint.setARGB(0x20, 0, 0, 0);//设置水印颜色
-            paint.setTextSize(30);//设置水印字体大小
-            paint.setAntiAlias(true); // 抗锯齿
+            paint.setTextSize(40f);//设置水印字体大小
             canvas.rotate(-20);
-            canvas.drawText(text, 0, 470, paint);
+            canvas.drawText(text, 50, 470, paint);
             canvas.drawText(text, 0, 860, paint);
             canvas.rotate(0);
-            paint.setTextSize(16);
+            paint.setTextSize(14.2f);
         }
     }
 
