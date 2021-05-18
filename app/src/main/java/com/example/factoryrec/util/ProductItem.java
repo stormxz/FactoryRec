@@ -198,4 +198,8 @@ public class ProductItem {
         this.mLogo_Pic = logo_pic;
     }
 
+    public void releaseProductItem() {
+        mItem = null;
+    }
+
 }

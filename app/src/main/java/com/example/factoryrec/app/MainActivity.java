@@ -248,4 +248,12 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         mFragmentList.get(mViewPager.getCurrentItem()).onActivityResult(requestCode, resultCode, data);
 
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (mItem != null) {
+            mItem.releaseProductItem();
+        }
+    }
 }
