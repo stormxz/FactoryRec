@@ -18,6 +18,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class PdfCreator {
@@ -56,7 +57,7 @@ public class PdfCreator {
         document.finishPage(page);
 
         String pdfName = mItem.getCustomer() + " " + mItem.getMachineType() + " " + mItem.getBadPhenom2() + "不良解析报告.pdf";
-        String path = mActivity.getApplicationContext().getExternalFilesDir(null) + "/" + pdfName;
+        String path = mActivity.getApplicationContext().getExternalFilesDir(null) + "/" + getTime() + "/" + pdfName;
 //        String path = mActivity.getApplicationContext().getExternalFilesDir(null) + "/table1.pdf";
         Log.i("cc", "path = " + path);
         System.out.println(path);
@@ -241,6 +242,22 @@ public class PdfCreator {
             canvas.rotate(0);
             paint.setTextSize(14.2f);
         }
+    }
+
+    private String getTime() {
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH)+1;
+        String monS = "" + month;
+        if (month < 10) {
+            monS = "0" + monS;
+        }
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        String dayS = "" + day;
+        if (day < 10) {
+            dayS = "0" + dayS;
+        }
+        return "" + year + monS + dayS;
     }
 
 }

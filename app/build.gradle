@@ -34,6 +34,6 @@ dependencies {
 
     api 'com.journeyapps:zxing-android-embedded:3.0.2@aar'
     api 'com.google.zxing:core:3.3.0'
-
+    compile 'commons-net:commons-net:3.5'
     implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.3'
 }

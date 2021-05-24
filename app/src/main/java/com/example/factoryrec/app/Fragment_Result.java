@@ -31,7 +31,6 @@ import android.widget.Toast;
 import com.example.factoryrec.R;
 import com.example.factoryrec.adapter.LogoViewListAdapter;
 import com.example.factoryrec.excel.ExcelCreator;
-import com.example.factoryrec.selector.MultiImageSelectorActivity;
 import com.example.factoryrec.ui.ListLogoDialog;
 import com.example.factoryrec.ui.SpinnerEditDialog;
 import com.example.factoryrec.util.PdfCreator;
