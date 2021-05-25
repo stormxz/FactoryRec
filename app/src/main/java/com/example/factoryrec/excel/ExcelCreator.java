@@ -54,9 +54,10 @@ public class ExcelCreator {
             // 1. 获取当前时间，创建目录
             String submitTimer = getTime();
             File fileNameDir = mActivity.getApplicationContext().getExternalFilesDir(null);
-
+            File fileNamaRealDir = new File(fileNameDir.getAbsolutePath() + File.separator + "/" + submitTimer);
             String filePath = "解析资料" + submitTimer;
-            File fileName = new File(fileNameDir.getAbsolutePath() + File.separator + filePath + ".xls");
+            File fileName = new File(fileNameDir.getAbsolutePath() + File.separator + "/" + submitTimer + "/"+ filePath + ".xls");
+            Log.e("stormxz", " filename aa = " + fileName.getName() + "  file ab = " + fileName);
             if (fileName.exists()) {
                 // 读取当前数量
                 int countValue = mSubmitCount_Value.getInt("submit_count_value", defaultCountValue);
@@ -90,7 +91,7 @@ public class ExcelCreator {
                 Log.e("stormxz", " file name do not exists create data");
 
                 // 创建文件
-                excelCreator.createExcel(fileNameDir.getAbsolutePath(), filePath);
+                excelCreator.createExcel(fileNamaRealDir.getAbsolutePath(), filePath);
                 // 创建表格
                 excelCreator.createSheet("sheet1");
                 excelCreator.setColumnWidth(0, 100, 50);
@@ -250,8 +251,16 @@ public class ExcelCreator {
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH)+1;
+        String monS = "" + month;
+        if (month < 10) {
+            monS = "0" + monS;
+        }
         int day = calendar.get(Calendar.DAY_OF_MONTH);
-        return "" + year + month + day;
+        String dayS = "" + day;
+        if (day < 10) {
+            dayS = "0" + dayS;
+        }
+        return "" + year + monS + dayS;
     }
 
     private void adjustCellWidth(ZzExcelCreator excelCreator, WritableCellFormat contextFormat) {

@@ -32,6 +32,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     public static final int PAGE_OM = 2;
     public static final int PAGE_SIGNAL = 3;
     public static final int PAGE_RESULT = 4;
+    public static final int PAGE_UPLOAD = 5;
     private int mCurrentPage = PAGE_HOME;
 
     private ArrayList<Fragment> mFragmentList;
@@ -43,6 +44,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private Button mOM_Button;
     private Button mSignal_Button;
     private Button mResult_Button;
+    private Button mUpload_Button;
     private List<Button> mButtonList;
 
     protected ProductItem mItem;
@@ -93,11 +95,14 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         mOM_Button = (Button) findViewById(R.id.page_om);
         mSignal_Button = (Button) findViewById(R.id.page_signal);
         mResult_Button = (Button) findViewById(R.id.page_result);
+        mUpload_Button = (Button) findViewById(R.id.page_upload);
+
         mHome_Button.setOnClickListener(this);
         mDynamic_Button.setOnClickListener(this);
         mOM_Button.setOnClickListener(this);
         mSignal_Button.setOnClickListener(this);
         mResult_Button.setOnClickListener(this);
+        mUpload_Button.setOnClickListener(this);
 
         mButtonList = new ArrayList<Button>();
         mButtonList.add(mHome_Button);
@@ -105,12 +110,13 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         mButtonList.add(mOM_Button);
         mButtonList.add(mSignal_Button);
         mButtonList.add(mResult_Button);
+        mButtonList.add(mUpload_Button);
     }
 
     private void initViewPage() {
         mViewPager = findViewById(R.id.pager);
         mFragmentList = new ArrayList<Fragment>();
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 6; i++) {
             initPages(i);
         }
         mAdapter = new ViewPageAdapter(getSupportFragmentManager(), mFragmentList);
@@ -118,7 +124,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         mViewPager.addOnPageChangeListener((ViewPager.OnPageChangeListener) mAdapter);
         mViewPager.setCurrentItem(mCurrentPage);
         mViewPager.setPageTransformer(true, new ViewPageTransformer());
-        mViewPager.setOffscreenPageLimit(5);
+        mViewPager.setOffscreenPageLimit(6);
     }
 
     private void initPages(int index) {
@@ -143,6 +149,10 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             case PAGE_RESULT:
                 fragment = new Fragment_Result();
                 mFragmentList.add(PAGE_RESULT,fragment);
+                break;
+            case PAGE_UPLOAD:
+                fragment = new Fragment_Upload();
+                mFragmentList.add(PAGE_UPLOAD,fragment);
         }
     }
 
@@ -204,7 +214,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         public void onPageSelected(int index) {
             Log.i(TAG, "onPageSelected : index = " + index);
             mCurrentPage = index;
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < 6; i++) {
                 if (index == i) {
                     mButtonList.get(i).setBackgroundColor(getResources().getColor(R.color.button_color_selected, null));
                 } else {
@@ -239,6 +249,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             case R.id.page_result:
                 mViewPager.setCurrentItem(PAGE_RESULT, true);
                 break;
+            case R.id.page_upload:
+                mViewPager.setCurrentItem(PAGE_UPLOAD, true);
+                break;
         }
     }
 
@@ -247,6 +260,10 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         super.onActivityResult(requestCode, resultCode, data);
         mFragmentList.get(mViewPager.getCurrentItem()).onActivityResult(requestCode, resultCode, data);
 
+    }
+
+    public int getCurrentViewPageIndex() {
+        return mViewPager.getCurrentItem();
     }
 
     @Override

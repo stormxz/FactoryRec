@@ -125,7 +125,12 @@ public class MainFragment extends Fragment {
                         public void accept(Permission permission) {
                             if (permission.granted) {// 用户已经同意该权限
                                 //第一种方式，弹出选择和拍照的dialog
-                                showPop(false);
+                                Log.e("stormxz", " get current item = " + mActivity.getCurrentViewPageIndex());
+                                if (mActivity.getCurrentViewPageIndex() == 5) {
+                                    showVideoAndPic();
+                                } else {
+                                    showPop(false);
+                                }
 
                                 //第二种方式，直接进入相册，但是 是有拍照得按钮的
 //                                showAlbum();
@@ -194,6 +199,20 @@ public class MainFragment extends Fragment {
                 .minSelectNum(1)
                 .imageSpanCount(4)
                 .enableCrop(needCrop)// 是否裁剪
+                .compress(true)// 是否压缩
+                //.sizeMultiplier(0.5f)// glide 加载图片大小 0~1之间 如设置 .glideOverride()无效
+                .glideOverride(160, 160)// glide 加载宽高，越小图片列表越流畅，但会影响列表图片浏览的清晰度
+                .withAspectRatio(4, 3)// 裁剪比例 如16:9 3:2 3:4 1:1 可自定义
+                .selectionMode(PictureConfig.MULTIPLE)
+                .forResult(PictureConfig.CHOOSE_REQUEST);
+    }
+
+    protected void showVideoAndPic() {
+        PictureSelector.create(getActivity())
+                .openGallery(PictureMimeType.ofAll())
+                .maxSelectNum(3)
+                .minSelectNum(1)
+                .imageSpanCount(4)
                 .compress(true)// 是否压缩
                 //.sizeMultiplier(0.5f)// glide 加载图片大小 0~1之间 如设置 .glideOverride()无效
                 .glideOverride(160, 160)// glide 加载宽高，越小图片列表越流畅，但会影响列表图片浏览的清晰度
