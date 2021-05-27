@@ -33,11 +33,29 @@ public class Fragment_Signal extends MainFragment {
     private List<Bitmap> postPictureData;
 
     private EditText mSignalEditText = null;
+    private EditText mSignalConfirmEditText = null;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_menu_signal, container, false);
+        mSignalConfirmEditText = view.findViewById(R.id.signal_confirm_et);
+        mSignalConfirmEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                mItem.setConfirm_3(s + "");
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
         mSignalEditText = view.findViewById(R.id.signal_et);
         mRecyclerView = view.findViewById(R.id.recycler_single);
         mSignalEditText.addTextChangedListener(new TextWatcher() {

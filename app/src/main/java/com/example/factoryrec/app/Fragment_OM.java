@@ -29,11 +29,29 @@ import static android.app.Activity.RESULT_OK;
 public class Fragment_OM extends MainFragment {
 
     private EditText mOMEditText = null;
+    private EditText mOMConfirmEditText = null;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_menu_om, container, false);
+        mOMConfirmEditText = view.findViewById(R.id.om_confirm_et);
+        mOMConfirmEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                mItem.setConfirm_2(s + "");
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
         mOMEditText = view.findViewById(R.id.om_et);
         mRecyclerView = view.findViewById(R.id.recycler_om);
 

@@ -56,8 +56,8 @@ public class PdfCreator {
         drawPdf(page.getCanvas());
         document.finishPage(page);
 
-        String pdfName = mItem.getCustomer() + " " + mItem.getMachineType() + " " + mItem.getBadPhenom2() + "不良解析报告.pdf";
-        String path = mActivity.getApplicationContext().getExternalFilesDir(null) + "/" + getTime() + "/" + pdfName;
+        String pdfName = mItem.getCustomer() + " " + mItem.getMachineType() + " " + mItem.getBadPhenom2() + "不良解析报告" + getTime() + ".pdf";
+        String path = mActivity.getApplicationContext().getExternalFilesDir(null) + "/" + pdfName;
 //        String path = mActivity.getApplicationContext().getExternalFilesDir(null) + "/table1.pdf";
         Log.i("cc", "path = " + path);
         System.out.println(path);
@@ -118,7 +118,7 @@ public class PdfCreator {
         WeakReference<Bitmap> wfb = new WeakReference<>(BitmapFactory.decodeResource(mActivity.getResources(), R.drawable.bg1, options));
         Bitmap bitmap = wfb.get();
         Log.i("cc", "bitmap.width = " + bitmap.getWidth() + ", bitmap.height = " + bitmap.getHeight());
-        Rect dst = new Rect(80, 80, mScreenWidth - 80, (mScreenWidth - 160)  * bitmap.getHeight() / bitmap.getWidth() + 80);
+        Rect dst = new Rect(20, 35, mScreenWidth - 20, (mScreenWidth - 70)  * bitmap.getHeight() / bitmap.getWidth() + 35);
         Log.i("cc", "mScreenWidth = " + mScreenWidth + ", bottom = " + (mScreenWidth - 160)  * bitmap.getHeight() / bitmap.getWidth());
         canvas.drawBitmap(bitmap, null, dst, paint);
         wfb.clear();
@@ -126,8 +126,8 @@ public class PdfCreator {
     }
 
     private void drawLogoAndroidTitle(Canvas canvas, Paint paint, BitmapFactory.Options options) {
-        int x = 100;
-        int y = 84;
+        int x = 30;
+        int y = 42;
         int logoWidth = 0;
         boolean logoDrawed = false;
         if (mShowLogo && mItem.getLogo_Pic() != null) {
@@ -150,40 +150,40 @@ public class PdfCreator {
     private void drawListText(Canvas canvas, Paint paint) {
         paint.setTextSize(17f);
         paint.setFakeBoldText(true);
-        drawText("客户", 120, 140, canvas, paint);
-        drawText("SN", 125, 163, canvas, paint);
-        drawText("不良大类", 105, 188, canvas, paint);
-        drawText("发生时间", 105, 212, canvas, paint);
-        drawText("机种", 425, 140, canvas, paint);
-        drawText("发生站点", 410, 163, canvas, paint);
-        drawText("不良现象", 410, 188, canvas, paint);
-        drawText("不良位置", 410, 212, canvas, paint);
-        drawText("Phenomenal Description", 103, 237, canvas, paint);
-        drawText("Failure Analysis", 103, 394, canvas, paint);
-        drawText("Root cause", 103, 983, canvas, paint);
+        drawText("客户", 70, 102, canvas, paint);
+        drawText("SN", 75, 131, canvas, paint);
+        drawText("不良大类", 55, 160, canvas, paint);
+        drawText("发生时间", 55, 188, canvas, paint);
+        drawText("机种", 445, 102, canvas, paint);
+        drawText("发生站点", 430, 131, canvas, paint);
+        drawText("不良现象", 430, 160, canvas, paint);
+        drawText("不良位置", 430, 188, canvas, paint);
+        drawText("Phenomenal Description", 50, 216, canvas, paint);
+        drawText("Failure Analysis", 50, 399, canvas, paint);
+        drawText("Root cause", 50, 1082, canvas, paint);
         paint.setTextSize(15.5f);
-        drawText("1.外观确认", 111, 419, canvas, paint);
-        drawText("2.OM确认", 111, 600, canvas, paint);
-        drawText("3.讯号量测确认", 111, 781, canvas, paint);
+        drawText("1." + mItem.getConfirm_1(), 58, 427, canvas, paint);
+        drawText("2." + mItem.getConfirm_2(), 58, 637, canvas, paint);
+        drawText("3." + mItem.getConfirm_3(), 58, 848, canvas, paint);
         paint.setTextSize(14.2f);
         paint.setFakeBoldText(false);
     }
 
     private void drawHomeText(Canvas canvas, Paint paint) {
-        drawText(mItem.getCustomer(), 210, 138, canvas, paint);                   //客户
-        drawText(mItem.getSN(), 210, 163, canvas, paint);                          //sn
-        drawText(mItem.getBadPhenom(), 210, 187, canvas, paint);                  //不良大类
-        drawText(mItem.getOccDate(), 210, 211, canvas, paint);                    //发生时间
-        drawText(mItem.getMachineType(), 515, 138, canvas, paint);                //机种
-        drawText(mItem.getOccSite(), 515, 163, canvas, paint);                    //发生站点
-        drawText(mItem.getBadPhenom2(), 515, 187, canvas, paint);                 //不良现象
-        drawText(mItem.getBadPosition(), 515, 211, canvas, paint);                //不良位置
-        drawText("小结：" + mItem.getDisplayText(), 111, 575, canvas, paint);                //外观确认
-        drawText("小结：" + mItem.getOMText(), 111, 756, canvas, paint);                     //OM检查
-        drawText("小结：" + mItem.getSignalText(), 111, 958, canvas, paint);                 //讯号量测确认
-        drawText(mItem.getConclusion(), 110, 1007, canvas, paint);                    //结论
+        drawText(mItem.getCustomer(), 170, 101, canvas, paint);                   //客户
+        drawText(mItem.getSN(), 170, 130, canvas, paint);                         //sn
+        drawText(mItem.getBadPhenom(), 170, 159, canvas, paint);                  //不良大类
+        drawText(mItem.getOccDate(), 170, 187, canvas, paint);                    //发生时间
+        drawText(mItem.getMachineType(), 545, 101, canvas, paint);                //机种
+        drawText(mItem.getOccSite(), 545, 130, canvas, paint);                    //发生站点
+        drawText(mItem.getBadPhenom2(), 545, 159, canvas, paint);                 //不良现象
+        drawText(mItem.getBadPosition(), 545, 187, canvas, paint);                //不良位置
+        drawText("小结：" + mItem.getDisplayText(), 58, 610, canvas, paint);                //外观确认
+        drawText("小结：" + mItem.getOMText(), 58, 820, canvas, paint);                     //OM检查
+        drawText("小结：" + mItem.getSignalText(), 58, 1053, canvas, paint);                //讯号量测确认
+        drawText(mItem.getConclusion(), 58, 1110, canvas, paint);                    //结论
         if (mShowFooter) {
-            drawText(mItem.getFooter(), 580, 1060, canvas, paint);                    //页脚
+            drawText(mItem.getFooter(), 600, 1160, canvas, paint);                   //页脚
         }
     }
 
@@ -201,21 +201,21 @@ public class PdfCreator {
     }
 
     private void drawBadPic(Canvas canvas, Paint paint, BitmapFactory.Options options) {
-        int x = 140;
-        int badPicWidth = 205;
-        int badPicHeight = 125;
+        int x = 120;
+        int badPicWidth = 225;
+        int badPicHeight = 145;
         //首页不良图片
         ArrayList homeBitmapList = (ArrayList) mItem.getHome_BadPic();
-        drawBadPic(canvas, paint, options, homeBitmapList, x, 247, badPicWidth, badPicHeight);
+        drawBadPic(canvas, paint, options, homeBitmapList, x, 228, badPicWidth, badPicHeight);
         //外观不良图片
         ArrayList displayBitmapList = (ArrayList) mItem.getDisplay_BadPic();
-        drawBadPic(canvas, paint, options, displayBitmapList, x, 430, badPicWidth, badPicHeight);
+        drawBadPic(canvas, paint, options, displayBitmapList, x, 440, badPicWidth, badPicHeight);
         //OM不良图片
         ArrayList OMBitmapList = (ArrayList) mItem.getOM_BadPic();
-        drawBadPic(canvas, paint, options, OMBitmapList, x, 610, badPicWidth, badPicHeight);
+        drawBadPic(canvas, paint, options, OMBitmapList, x, 650, badPicWidth, badPicHeight);
         //讯号量测不良图片
         ArrayList signalBitmapList = (ArrayList) mItem.getSignal_BadPic();
-        drawBadPic(canvas, paint, options, signalBitmapList, x, 800, badPicWidth, badPicHeight);
+        drawBadPic(canvas, paint, options, signalBitmapList, x, 870, badPicWidth, badPicHeight);
     }
 
     private void drawBadPic(Canvas canvas, Paint paint, BitmapFactory.Options options, List list, int x, int y, int picWidth, int picHeight) {
@@ -238,7 +238,7 @@ public class PdfCreator {
             paint.setTextSize(40f);//设置水印字体大小
             canvas.rotate(-20);
             canvas.drawText(text, 50, 470, paint);
-            canvas.drawText(text, 0, 860, paint);
+            canvas.drawText(text, 0, 940, paint);
             canvas.rotate(0);
             paint.setTextSize(14.2f);
         }
