@@ -395,6 +395,7 @@ public class Fragment_Result extends MainFragment {
 //                                    mLogoAdapter.notifyDataSetChanged();
                                     mLogoAdapter.notifyDataSetInvalidated();
                                     dialog.getLogoListView().setSelection(-1);
+                                    mSelectPosition = -1;
                                     mLogo_Uri_Edit.putString("uri", list2String(mLogoUriList).toString());
                                     mLogo_Uri_Edit.commit();
                                 }

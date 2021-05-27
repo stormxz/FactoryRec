@@ -33,12 +33,31 @@ public class Fragment_Display extends MainFragment {
     private List<Bitmap> postPictureData;
 
     private EditText mDisplayEditText = null;
+    private EditText mDisplayConfirmEditText = null;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_menu_display, container, false);
         mRecyclerView = view.findViewById(R.id.recycler_display);
+
+        mDisplayConfirmEditText = view.findViewById(R.id.display_confirm_et);
+        mDisplayConfirmEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                mItem.setConfirm_1(s + "");
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         mDisplayEditText = view.findViewById(R.id.display_et);
                         // 添加显示文本编辑监听

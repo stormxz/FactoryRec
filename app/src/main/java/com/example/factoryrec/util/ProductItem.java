@@ -25,6 +25,10 @@ public class ProductItem {
     private String mLogo_Pic;           //Logo图片
     private String mConclusion;         //结论
 
+    private String mConfirm_1 = "外观确认";     //确认页面一
+    private String mConfirm_2 = "OM确认";     //确认页面二
+    private String mConfirm_3 = "讯号量测确认";     //确认页面三
+
     private List<String> mHome_BadPic;        //主页不良图片
     private List<String> mDisplay_BadPic;     //外观不良图片
     private List<String> mOM_BadPic;          //OM不良图片
@@ -156,6 +160,30 @@ public class ProductItem {
 
     public void setConclusion(String mConclusion) {
         this.mConclusion = mConclusion;
+    }
+
+    public String getConfirm_1() {
+        return mConfirm_1;
+    }
+
+    public void setConfirm_1(String confirm_1) {
+        this.mConfirm_1 = confirm_1;
+    }
+
+    public String getConfirm_2() {
+        return mConfirm_2;
+    }
+
+    public void setConfirm_2(String confirm_2) {
+        this.mConfirm_2 = confirm_2;
+    }
+
+    public String getConfirm_3() {
+        return mConfirm_3;
+    }
+
+    public void setConfirm_3(String confirm_3) {
+        this.mConfirm_3 = confirm_3;
     }
 
     public List<String> getHome_BadPic() {
